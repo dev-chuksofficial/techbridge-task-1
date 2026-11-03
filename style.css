@@ -433,3 +433,54 @@ html:not(.js) .faq-a{grid-template-rows:1fr}
 .quick .mini{display:block;text-decoration:none;color:inherit}
 @media (max-width:900px){.why{grid-template-columns:1fr 1fr}.ph-art{opacity:.16;width:80%}}
 @media (max-width:560px){.why{grid-template-columns:1fr}.faq-q{font-size:1.15rem}}
+
+/* ===== v6: announcement, key facts, modals, voices, mobile apply ===== */
+.ann{position:relative;background:var(--gold);color:var(--navy);text-align:center;padding:.55rem 3rem;font-size:.92rem;font-weight:500}
+.ann a{font-weight:600;text-decoration:underline;text-underline-offset:3px;margin-left:.3rem}
+.ann-x{position:absolute;right:.6rem;top:50%;transform:translateY(-50%);width:32px;height:32px;border:0;background:none;color:var(--navy);cursor:pointer;border-radius:50%}
+.ann-x:hover{background:rgba(13,0,77,.12)}
+.narrow2{max-width:860px}
+.facts{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);box-shadow:0 18px 40px rgba(13,0,77,.07);margin-top:2.5rem}
+.facts>div{display:grid;grid-template-columns:260px 1fr;gap:1rem;padding:1rem 1.6rem;border-bottom:1px solid var(--line);transition:background .25s}
+.facts>div:last-child{border:0}
+.facts>div:hover{background:var(--tint)}
+.facts dt{color:var(--muted);font-size:.95rem}
+.facts dt i{width:1.6rem;color:var(--gold)}
+.facts dd{font-weight:600;color:var(--navy)}
+.pill{display:inline-block;font-size:.82rem;font-weight:500;color:var(--muted);border:1px dashed var(--muted);border-radius:999px;padding:.1rem .7rem;margin-right:.5rem}
+.link-btn{background:none;border:0;font:inherit;font-weight:600;color:var(--navy);cursor:pointer;margin-right:1.4rem;text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:5px}
+.link-btn:hover{color:var(--navy-2)}
+.modal{border:0;padding:2.4rem;max-width:520px;width:calc(100% - 2rem);margin:auto;border-top:4px solid var(--gold);box-shadow:0 30px 70px rgba(13,0,77,.4);color:var(--ink)}
+.modal[open]{animation:mdl .35s ease}
+@keyframes mdl{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.modal::backdrop{background:rgba(13,0,77,.62);backdrop-filter:blur(3px)}
+.modal h3{font-size:1.9rem;margin-bottom:.6rem}
+.modal p{color:var(--muted);margin-bottom:1.3rem}
+.modal .x{position:absolute;right:.8rem;top:.8rem;width:38px;height:38px;border:0;background:none;font-size:1.1rem;color:var(--navy);cursor:pointer;border-radius:50%}
+.modal .x:hover{background:var(--tint)}
+.mfacts{border:1px solid var(--line);margin-bottom:1.5rem}
+.mfacts div{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);font-size:.95rem}
+.mfacts div:last-child{border:0}
+.mfacts dt{color:var(--muted)}
+.mfacts dd{font-weight:600;text-align:right}
+.voices{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
+.voice{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);padding:2rem}
+.voice blockquote{font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.5;margin-bottom:1.2rem}
+.voice strong{display:block}
+.voice span{color:var(--muted);font-size:.92rem}
+.partners{padding:3rem 0;border-block:1px solid var(--line);text-align:center}
+.partners h2{font-size:1.5rem}
+.partners h2::after{display:none}
+.plist{display:flex;flex-wrap:wrap;gap:1.5rem 3rem;justify-content:center;align-items:center;margin-top:1.6rem}
+.plist img{height:44px;width:auto;filter:grayscale(1);opacity:.7;transition:.3s}
+.plist a:hover img{filter:none;opacity:1}
+.plist span{font-family:var(--serif);font-size:1.2rem;color:var(--muted)}
+.m-apply{display:none}
+@media (max-width:760px){
+  .facts>div{grid-template-columns:1fr;gap:.2rem}
+  .m-apply{display:flex;align-items:center;justify-content:center;gap:.6rem;position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--navy);color:#fff;padding:.95rem 1rem;font-weight:600;text-decoration:none;border-top:2px solid var(--gold);transform:translateY(110%);transition:transform .35s}
+  .m-apply i{color:var(--gold-l)}
+  .m-apply.show{transform:none}
+  .to-top{bottom:4.6rem}
+  .footer{padding-bottom:3.5rem}
+}
