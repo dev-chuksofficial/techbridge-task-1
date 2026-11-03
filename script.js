@@ -235,4 +235,41 @@
       if (t - t0 < 2600) requestAnimationFrame(f); else c.remove();
     });
   }
+
+  /* Announcement bar */
+  var ann = $('#ann');
+  if (ann) {
+    if (sessionStorage.getItem('tb-ann')) ann.remove();
+    else $('#annX').addEventListener('click', function () { sessionStorage.setItem('tb-ann', '1'); ann.remove(); });
+  }
+
+  /* Mobile apply bar */
+  var mA = $('#mApply');
+  if (mA) addEventListener('scroll', function () { mA.classList.toggle('show', d.documentElement.scrollTop > 500); }, { passive: true });
+
+  /* Program detail dialogs */
+  $$('[data-modal]').forEach(function (b) {
+    b.addEventListener('click', function () { var m = $('#' + b.dataset.modal); if (m && m.showModal) m.showModal(); });
+  });
+  $$('dialog.modal').forEach(function (m) {
+    m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('[data-close]')) m.close(); });
+  });
+
+  /* Testimonials and partners: only approved items from data.js are shown */
+  var data = window.TB_DATA || {};
+  var tests = (data.testimonials || []).filter(function (t) { return t && t.approved === true && t.quote && t.name; });
+  var parts = (data.partners || []).filter(function (p) { return p && p.approved === true && p.name; });
+  if (tests.length && $('#voices')) {
+    $('#voicesList').innerHTML = tests.map(function (t) {
+      return '<figure class="voice reveal"><blockquote>&ldquo;' + esc(t.quote) + '&rdquo;</blockquote><figcaption><strong>' + esc(t.name) + '</strong>' + (t.role ? '<span>' + esc(t.role) + '</span>' : '') + '</figcaption></figure>';
+    }).join('');
+    $('#voices').hidden = false;
+  }
+  if (parts.length && $('#partners')) {
+    $('#partnersList').innerHTML = parts.map(function (p) {
+      var inner = p.logo ? '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '">' : '<span>' + esc(p.name) + '</span>';
+      return p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + inner + '</a>' : '<div>' + inner + '</div>';
+    }).join('');
+    $('#partners').hidden = false;
+  }
 })();
