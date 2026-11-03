@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply | TechBridge Internship Application</title>
+<meta name="description" content="TechBridge by Baselink Services Limited offers Data Analytics and Web Development programs and a 30-day practical internship.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" id="siteHeader">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="TechBridge home"><img src="images/logo.png" alt="TechBridge" width="160" height="31"></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+    <label for="nav-toggle" class="burger" aria-hidden="true"><i></i></label>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#about">About</a>
+      <a href="index.html#programs">Programs</a>
+      <a href="index.html#internship">Internship</a>
+      <a href="index.html#apply">How to apply</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Apply now</a>
+    </nav>
+  </div>
+  <div class="scroll-bar" id="scrollBar"></div>
+</header>
+<main id="main">
+<section class="page-hero"><span class="orb o1"></span><span class="orb o2"></span>
+  <div class="wrap"><p class="crumb reveal"><a href="index.html">Home</a> <i class="fa-solid fa-chevron-right"></i> Apply</p>
+  <h1 class="reveal" style="--d:.1s"><i class="fa-solid fa-file-pen"></i> Internship Application</h1><p class="lead reveal" style="--d:.2s">Check your details here first, then complete the official TechBridge Internship Application Form.</p></div></section>
+<section class="section tint form-sec"><div class="wrap narrow">
+  <div class="demo-note reveal"><i class="fa-solid fa-circle-info"></i><p><strong>Two steps to apply.</strong> Prepare your details on this page, then submit the official TechBridge Internship Application Form. Nothing on this page is sent to TechBridge. <a class="link" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Go straight to the official form</a></p></div>
+  <div class="card reveal" id="formCard">
+    <ol class="stp" aria-label="Application progress"><li class="on"><b>1</b><span>Your details</span></li><li><b>2</b><span>Your program</span></li><li><b>3</b><span>Review</span></li><div class="stp-line"><div id="fillbar"></div></div></ol>
+    <form id="applyForm" novalidate>
+      <div class="fstep">
+        <h2>Your details</h2>
+        <div class="field"><label for="name">Full name</label><input id="name" name="name" type="text" autocomplete="name" required minlength="3"><small>Please enter your full name.</small></div>
+        <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required><small>Please enter a valid email address.</small></div>
+        <div class="btns"><span></span><button type="button" class="btn btn-navy" data-next>Continue <i class="fa-solid fa-arrow-right-long"></i></button></div>
+      </div>
+      <div class="fstep" hidden>
+        <h2>Your program</h2>
+        <div class="field"><span class="lbl">Choose a program</span>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="program" value="Data Analytics" required><span><i class="fa-solid fa-chart-column"></i> Data Analytics</span></label>
+            <label class="choice"><input type="radio" name="program" value="Web Development" required><span><i class="fa-solid fa-code"></i> Web Development</span></label>
+          </div><small>Please choose a program.</small></div>
+        <div class="field"><label for="level">Your experience level</label><select id="level" name="level" required><option value="">Select one</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><small>Please select your level.</small></div>
+        <div class="field"><label for="why">Why do you want to join?</label><textarea id="why" name="why" rows="4" required minlength="20"></textarea><small>Please write at least 20 characters.</small></div>
+        <div class="btns"><button type="button" class="btn btn-line" data-prev><i class="fa-solid fa-arrow-left-long"></i> Back</button><button type="button" class="btn btn-navy" data-next>Review <i class="fa-solid fa-arrow-right-long"></i></button></div>
+      </div>
+      <div class="fstep" hidden>
+        <h2>Review your application</h2>
+        <dl class="summary" id="summary"></dl>
+        <div class="field"><label class="check"><input type="checkbox" name="ok" required><span>I confirm the information above is correct.</span></label><small>Please confirm before submitting.</small></div>
+        <div class="btns"><button type="button" class="btn btn-line" data-prev><i class="fa-solid fa-arrow-left-long"></i> Back</button><button type="submit" class="btn btn-gold"><i class="fa-solid fa-check"></i> Confirm my details</button></div>
+      </div>
+    </form>
+    <div class="done" id="done" hidden>
+      <svg viewBox="0 0 52 52" class="tick"><circle cx="26" cy="26" r="24" pathLength="1"/><path d="M15 27l8 8 14-16" pathLength="1"/></svg>
+      <h2>Your details are ready</h2>
+      <p>Thank you, <b id="doneName"></b>. Nothing has been sent yet. Complete the official TechBridge Internship Application Form to apply.</p>
+      <p class="actions c"><a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Open the official form</a><a class="btn btn-navy" href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Join the community</a></p>
+    </div>
+  </div>
+</div></section>
+</main>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand" href="index.html"><img src="images/logo-white.png" alt="TechBridge" width="170" height="33"></a>
+      <p class="tag">Bridging Learning to Real-World Experience</p>
+      <p class="small">TechBridge by Baselink Services Limited</p>
+      <div class="soc">
+  <a href="https://www.linkedin.com/company/techbridge-services/" target="_blank" rel="noopener" aria-label="TechBridge on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+  <a href="https://www.facebook.com/p/Baselink-Services-100066771475783/" target="_blank" rel="noopener" aria-label="TechBridge on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+  <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener" aria-label="TechBridge WhatsApp Community"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="mailto:techbridgebaslink@gmail.com" aria-label="Email TechBridge"><i class="fa-solid fa-envelope"></i></a>
+</div>
+    </div>
+    <nav aria-label="Footer">
+      <a href="index.html#programs">Programs</a>
+      <a href="index.html#internship">Internship</a>
+      <a href="apply.html">Apply</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div>
+      <a href="mailto:techbridgebaslink@gmail.com"><i class="fa-solid fa-envelope"></i> techbridgebaslink@gmail.com</a>
+      <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Internship application form</a>
+      <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Community</a>
+    </div>
+  </div>
+  <div class="wrap copy">&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</div>
+</footer>
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
+<div class="toast" id="toast" role="status"></div>
+<script src="script.js"></script>
+</body>
+</html>
