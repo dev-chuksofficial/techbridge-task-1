@@ -169,7 +169,7 @@
     f.addEventListener('submit', function (e) {
       e.preventDefault(); if (!valid()) return;
       $('#doneName').textContent = new FormData(f).get('name');
-      f.hidden = true; $('.stp').hidden = true; $('#done').hidden = false;
+      f.hidden = true; $('.stp').hidden = true; $('#done').hidden = false; confetti();
       $('#formCard').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     });
   }
@@ -188,4 +188,51 @@
       '&body=' + encodeURIComponent(fd.get('cm') + '\n\nFrom: ' + fd.get('cn') + ' (' + fd.get('ce') + ')');
     toast('Opening your email app...');
   });
+
+  /* FAQ accordion */
+  $$('.faq-q').forEach(function (q) {
+    q.addEventListener('click', function () {
+      var item = q.parentNode, open = !item.classList.contains('open');
+      $$('.faq-item').forEach(function (i) { i.classList.remove('open'); $('.faq-q', i).setAttribute('aria-expanded', 'false'); });
+      if (open) { item.classList.add('open'); q.setAttribute('aria-expanded', 'true'); }
+    });
+  });
+
+  /* Copy email */
+  $$('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.dataset.copy;
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject())
+        .then(function () { toast('Email copied'); }).catch(function () { toast(t); });
+    });
+  });
+
+  /* Magnetic buttons */
+  if (!reduce && matchMedia('(hover: hover)').matches) $$('.hero .btn, .cta .btn').forEach(function (b) {
+    b.addEventListener('mousemove', function (e) {
+      var r = b.getBoundingClientRect();
+      b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * 0.18) + 'px,' + ((e.clientY - r.top - r.height / 2) * 0.28) + 'px)';
+    });
+    b.addEventListener('mouseleave', function () { b.style.transform = ''; });
+  });
+
+  /* Confetti burst when the details check is confirmed */
+  function confetti() {
+    if (reduce) return;
+    var c = d.createElement('canvas');
+    c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:200';
+    d.body.appendChild(c);
+    var x = c.getContext('2d'), w = c.width = innerWidth, h = c.height = innerHeight, t0 = 0;
+    var cols = ['#39B80A', '#7EE05A', '#0D004D', '#1E1275', '#ffffff'], ps = [];
+    for (var i = 0; i < 140; i++) ps.push({ x: w / 2, y: h * 0.4, vx: (Math.random() - 0.5) * 16, vy: -Math.random() * 14 - 3, s: Math.random() * 7 + 4, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3, c: cols[i % 5] });
+    requestAnimationFrame(function f(t) {
+      if (!t0) t0 = t;
+      x.clearRect(0, 0, w, h);
+      ps.forEach(function (p) {
+        p.vy += 0.35; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); x.restore();
+      });
+      if (t - t0 < 2600) requestAnimationFrame(f); else c.remove();
+    });
+  }
 })();
