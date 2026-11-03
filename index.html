@@ -16,6 +16,7 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="preloader" id="preloader" aria-hidden="true"><div><img src="images/logo-white.png" alt="" width="240" height="47"><svg viewBox="0 0 200 20"><path d="M0 10H200" pathLength="1"/></svg><p>Bridging Learning to Real-World Experience</p></div></div>
+<div class="ann" id="ann"><p>Ready to apply? Complete the official TechBridge Internship Application Form. <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Open the form</a></p><button type="button" class="ann-x" id="annX" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
 <header class="site-header" id="siteHeader">
   <div class="wrap bar">
     <a class="brand" href="index.html" aria-label="TechBridge home"><img src="images/logo.png" alt="TechBridge" width="160" height="31"></a>
@@ -77,13 +78,13 @@
         <span class="ico"><i class="fa-solid fa-chart-column"></i></span>
         <h3>Data Analytics</h3>
         <p>Learn to turn raw data into clear answers. Work through practical exercises that build the habit of asking good questions and presenting findings.</p>
-        <a class="link" href="apply.html?program=Data%20Analytics">Apply for this track <i class="fa-solid fa-arrow-right-long"></i></a>
+        <button type="button" class="link-btn" data-modal="m-da">Details</button><a class="link" href="apply.html?program=Data%20Analytics">Apply for this track <i class="fa-solid fa-arrow-right-long"></i></a>
       </article>
       <article class="program tilt reveal" data-r="zoom" style="--d:.15s">
         <span class="ico"><i class="fa-solid fa-code"></i></span>
         <h3>Web Development</h3>
         <p>Learn to design and build real websites. Practise structuring pages, styling them well and making them work on every screen.</p>
-        <a class="link" href="apply.html?program=Web%20Development">Apply for this track <i class="fa-solid fa-arrow-right-long"></i></a>
+        <button type="button" class="link-btn" data-modal="m-wd">Details</button><a class="link" href="apply.html?program=Web%20Development">Apply for this track <i class="fa-solid fa-arrow-right-long"></i></a>
       </article>
     </div>
   </div>
@@ -111,6 +112,8 @@
   </div>
 </section>
 
+<!-- KEY FACTS: update the Start dates and Eligibility rows only with details confirmed by TechBridge. -->
+<section class="section tint" id="facts"><div class="wrap narrow2"><div class="head center-head reveal"><h2>Key facts</h2><p>The essentials at a glance.</p></div><dl class="facts reveal"><div><dt><i class="fa-solid fa-building"></i>Organization</dt><dd>TechBridge by Baselink Services Limited</dd></div><div><dt><i class="fa-solid fa-layer-group"></i>Current programs</dt><dd>Data Analytics and Web Development</dd></div><div><dt><i class="fa-solid fa-calendar-check"></i>Internship</dt><dd>30-Day Practical Internship</dd></div><div><dt><i class="fa-solid fa-hourglass-half"></i>Duration</dt><dd>30 days</dd></div><div><dt><i class="fa-solid fa-diagram-project"></i>Format</dt><dd>Practical and project-based</dd></div><div><dt><i class="fa-solid fa-award"></i>Recommendation letter</dt><dd>Possible, based on successful participation and performance</dd></div><div><dt><i class="fa-solid fa-user-graduate"></i>Who it is for</dt><dd>Learners and aspiring interns</dd></div><div><dt><i class="fa-solid fa-file-pen"></i>How to apply</dt><dd>The <a class="link" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">TechBridge Internship Application Form</a></dd></div><div><dt><i class="fa-solid fa-calendar-days"></i>Start dates</dt><dd><span class="pill">Confirm with TechBridge</span> <a class="link" href="contact.html">Ask us</a></dd></div><div><dt><i class="fa-solid fa-clipboard-check"></i>Eligibility details</dt><dd><span class="pill">Confirm with TechBridge</span> <a class="link" href="mailto:techbridgebaslink@gmail.com">Email us</a></dd></div></dl></div></section>
 <section class="section" id="why"><div class="wrap"><div class="head center-head reveal"><h2>Why join TechBridge</h2><p>Six reasons to take the next step from learning to doing.</p></div><div class="why"><article class="tile reveal" style="--d:0.0s"><i class="fa-solid fa-diagram-project"></i><h3>Practical, project-based</h3><p>Learn by building and doing real work, not theory alone.</p></article><article class="tile reveal" style="--d:0.12s"><i class="fa-solid fa-calendar-check"></i><h3>A focused 30 days</h3><p>A short, structured internship that is realistic to commit to.</p></article><article class="tile reveal" style="--d:0.24s"><i class="fa-solid fa-award"></i><h3>A possible recommendation letter</h3><p>Participants who succeed may receive one, based on their performance.</p></article><article class="tile reveal" style="--d:0.0s"><i class="fa-solid fa-route"></i><h3>Two clear tracks</h3><p>Choose Data Analytics or Web Development and go deep.</p></article><article class="tile reveal" style="--d:0.12s"><i class="fa-solid fa-user-group"></i><h3>A community to join</h3><p>Connect with other learners in the TechBridge WhatsApp Community.</p></article><article class="tile reveal" style="--d:0.24s"><i class="fa-solid fa-file-pen"></i><h3>One simple way to apply</h3><p>A single official application form gets you started.</p></article></div></div></section>
 <section class="section tint" id="apply">
   <div class="wrap">
@@ -130,6 +133,9 @@
   </div>
 </section>
 
+<!-- Testimonials and partners stay hidden until real, approved items are added in data.js -->
+<section class="section tint" id="voices" hidden><div class="wrap"><div class="head center-head"><h2>What participants say</h2><p>Shared with permission.</p></div><div class="voices" id="voicesList"></div></div></section>
+<section class="partners" id="partners" hidden><div class="wrap"><h2>Our partners</h2><div class="plist" id="partnersList"></div></div></section>
 <section class="section tint" id="faq"><div class="wrap narrow"><div class="head center-head reveal"><h2>Frequently asked questions</h2><p>Quick answers about TechBridge and the internship.</p></div><div class="faq reveal"><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What is TechBridge?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>TechBridge by Baselink Services Limited helps learners move from studying technology to practising it. Our tagline says it best: Bridging Learning to Real-World Experience.</p></div></div></div><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Which programs are available?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>Data Analytics and Web Development are the current programs, along with the 30-Day Practical Internship.</p></div></div></div><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Who are the programs for?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>Learners and aspiring interns who want practical, project-based experience and a clear next step after the classroom.</p></div></div></div><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How long is the internship?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>The internship runs for 30 days and is practical and project-based.</p></div></div></div><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Will I receive a recommendation letter?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>You may. Participants who complete the internship successfully may receive a recommendation letter, based on their performance.</p></div></div></div><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How do I apply?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>Complete the <a class="link" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">TechBridge Internship Application Form</a>. You can also prepare your details first on the <a class="link" href="apply.html">application page</a>.</p></div></div></div><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How do I join the community?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>Join the <a class="link" href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener">TechBridge WhatsApp Community</a> to connect with other learners.</p></div></div></div><div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">I have another question. Who do I contact?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><div><p>Email <a class="link" href="mailto:techbridgebaslink@gmail.com">techbridgebaslink@gmail.com</a> or visit the <a class="link" href="contact.html">contact page</a>.</p></div></div></div></div></div></section>
 <section class="cta"><span class="orb o1"></span><span class="orb o2"></span><div class="wrap cta-in reveal"><h2>Ready to cross the bridge?</h2><p>Take the step from learning to real-world experience. Apply for the internship or join the community today.</p><div class="actions"><a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply for the internship</a><a class="btn btn-ghost" href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Join the community</a></div></div></section>
 <section class="section" id="contact">
@@ -147,6 +153,8 @@
     </div>
   </div>
 </section>
+<dialog class="modal" id="m-da" aria-labelledby="m-da-t"><button type="button" class="x" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button><span class="ico"><i class="fa-solid fa-chart-column"></i></span><h3 id="m-da-t">Data Analytics</h3><p>Learn to turn raw data into clear answers. Work through practical exercises that build the habit of asking good questions and presenting findings.</p><dl class="mfacts"><div><dt>Status</dt><dd>Currently available</dd></div><div><dt>Who it is for</dt><dd>Learners and aspiring interns</dd></div><div><dt>Start dates</dt><dd>Confirm with TechBridge</dd></div></dl><div class="actions"><a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply now</a><a class="btn btn-line" href="contact.html">Ask a question</a></div></dialog>
+<dialog class="modal" id="m-wd" aria-labelledby="m-wd-t"><button type="button" class="x" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button><span class="ico"><i class="fa-solid fa-code"></i></span><h3 id="m-wd-t">Web Development</h3><p>Learn to design and build real websites. Practise structuring pages, styling them well and making them work on every screen.</p><dl class="mfacts"><div><dt>Status</dt><dd>Currently available</dd></div><div><dt>Who it is for</dt><dd>Learners and aspiring interns</dd></div><div><dt>Start dates</dt><dd>Confirm with TechBridge</dd></div></dl><div class="actions"><a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply now</a><a class="btn btn-line" href="contact.html">Ask a question</a></div></dialog>
 
 </main>
 <footer class="footer">
@@ -178,8 +186,10 @@
   </div>
   <div class="wrap copy">&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</div>
 </footer>
+<a class="m-apply" id="mApply" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply for the internship</a>
 <button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
 <div class="toast" id="toast" role="status"></div>
+<script src="data.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
