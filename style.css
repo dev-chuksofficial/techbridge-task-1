@@ -484,3 +484,51 @@ html:not(.js) .faq-a{grid-template-rows:1fr}
   .to-top{bottom:4.6rem}
   .footer{padding-bottom:3.5rem}
 }
+
+/* ===== v7: classic touches ===== */
+::selection{background:var(--gold);color:var(--navy)}
+html{scrollbar-color:var(--gold) var(--tint)}
+::-webkit-scrollbar{width:11px}::-webkit-scrollbar-track{background:var(--tint)}::-webkit-scrollbar-thumb{background:var(--navy);border:2px solid var(--tint);border-radius:8px}::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+.footer a:not(.brand){background:linear-gradient(var(--gold-l),var(--gold-l)) 0 100%/0 1px no-repeat;transition:background-size .3s,color .25s}
+.footer a:not(.brand):hover{background-size:100% 1px}
+.footer{border-top:4px double var(--gold)}
+.copy{border-top:3px double rgba(126,224,90,.35)}
+.node-rule{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:1.8rem auto;max-width:260px}
+.node-rule::before,.node-rule::after{content:"";height:1px;flex:1;background:var(--gold)}
+.node-rule span{width:10px;height:10px;border:2px solid var(--gold);border-radius:50%;background:#fff}
+.pq{text-align:center;border-block:4px double var(--line)}
+.pq .qm{display:block;font-family:var(--serif);font-size:6.5rem;line-height:.6;color:var(--gold);height:3rem}
+.pq blockquote{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(2rem,5vw,3.5rem);line-height:1.2;color:var(--navy)}
+.pq p{color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-size:.8rem}
+.steps li::before{counter-increment:none;content:counter(s,upper-roman);width:auto;min-width:2.1rem;padding:0 .6rem;border-radius:999px;font-size:.85rem;height:2.1rem}
+.sheet{margin-top:2rem}
+/* hero layers */
+.hero-bg{position:absolute;right:-8%;top:6%;width:70%;opacity:.1;pointer-events:none;will-change:transform;z-index:0;filter:blur(1px)}
+/* story */
+.story{position:relative;height:260vh;background:radial-gradient(120% 100% at 80% 0,var(--navy-2),var(--navy) 60%);color:#fff}
+.story-stick{position:sticky;top:0;height:100vh;display:flex;align-items:center;padding-top:68px;overflow:hidden}
+.story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:center;width:min(1120px,100% - 2.5rem)}
+.story-steps{position:relative;min-height:250px}
+.story-step{position:absolute;inset:0 auto auto 0;opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;pointer-events:none}
+.story-step.act{opacity:1;transform:none}
+.story-step .num{font-family:var(--serif);color:var(--gold-l);font-size:1.2rem;letter-spacing:.2em}
+.story-step h2{font-size:clamp(3rem,7vw,5.2rem);margin:.2rem 0 1rem}
+.story-step h2::after{display:none}
+.story-step p:last-child{color:#CBD5E3;font-size:1.15rem;max-width:36ch}
+.story-bar{height:3px;background:rgba(255,255,255,.15);margin-top:1.5rem;max-width:300px}
+.story-bar span{display:block;height:100%;width:0;background:var(--gold)}
+.story-svg{width:100%;height:auto}
+.story-svg .sp{stroke-dasharray:1;stroke-dashoffset:1}
+.story.static,html:not(.js) .story{height:auto}
+.story.static .story-stick,html:not(.js) .story .story-stick{position:static;height:auto;padding:4rem 0}
+.story.static .story-steps,html:not(.js) .story-steps{min-height:0}
+.story.static .story-step,html:not(.js) .story-step{position:static;opacity:1;transform:none;margin-bottom:1.8rem}
+html:not(.js) .story-svg .sp{stroke-dashoffset:0}
+html:not(.js) .story-svg g[opacity],html:not(.js) .story-svg text{opacity:1}
+@media (max-width:900px){.story-grid{grid-template-columns:1fr;gap:1rem}.story-steps{min-height:210px}.story-svg{max-height:34vh}.story-step h2{font-size:3rem}}
+/* cursor ring */
+.ring{position:fixed;left:-18px;top:-18px;width:36px;height:36px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;z-index:400;opacity:0;transition:opacity .3s,width .25s,height .25s,margin .25s,background .25s}
+.ring.on{opacity:.85}
+.ring.hot{width:58px;height:58px;margin:-11px;background:rgba(57,184,10,.14)}
+.story-svg .pulse-p{animation:prun 5s linear infinite}
+@keyframes prun{from{stroke-dashoffset:0}to{stroke-dashoffset:-1}}
