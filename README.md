@@ -2,7 +2,7 @@
 
 > **Bridging Learning to Real-World Experience**
 
-Hi, I'm **Chuks Official**, a web developer and frontend designer. This is my submission for **Task 1** of the TechBridge Web Development Internship: designing and building the homepage for **TechBridge by Baselink Services Limited**.
+Hi, I'm **Nwadire Prosper Chukwuka AKA Chuks Official**, a web developer and frontend designer. This is my submission for **Task 1** of the TechBridge Web Development Internship: designing and building the homepage for **TechBridge by Baselink Services Limited**.
 
 - **Live website:** [ _https://techbridge-task-1-pi.vercel.app/_](https://techbridge-task-1-pi.vercel.app/)
 - **Repository:** [_https://github.com/dev-chuksofficial/techbridge-task-1_](https://github.com/dev-chuksofficial/techbridge-task-1)
