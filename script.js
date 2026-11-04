@@ -89,14 +89,19 @@
     $$('.reveal').forEach(function (el) { io.observe(el); });
     if (reduce) $$('.reveal').forEach(function (el) { el.classList.add('in'); });
   }
-  function buildBridge() {
-    var spans = $$('#planks span'), label = $('#plankDay'), n = 0;
-    if (reduce) { spans.forEach(function (s) { s.classList.add('on'); }); label.textContent = 30; return; }
-    var iv = setInterval(function () {
-      if (n >= spans.length) { clearInterval(iv); return; }
-      spans[n].classList.add('on'); n++; label.textContent = n;
-    }, 70);
+  var plankIv;
+  function setPlanks(n) {
+    $$('#planks span').forEach(function (sp, k) { sp.classList.toggle('on', k < n); });
+    var l = $('#plankDay'); if (l) l.textContent = n;
+    var rg = $('#plankRange'); if (rg) rg.value = n;
   }
+  function buildBridge() {
+    var n = 0;
+    if (reduce) { setPlanks(30); return; }
+    plankIv = setInterval(function () { if (n >= 30) { clearInterval(plankIv); return; } n++; setPlanks(n); }, 70);
+  }
+  var rgEl = $('#plankRange');
+  if (rgEl) rgEl.addEventListener('input', function () { clearInterval(plankIv); setPlanks(+rgEl.value); });
 
   /* Pointer effects: hero spotlight and 3D card tilt */
   var hero = $('.hero');
@@ -177,7 +182,7 @@
   /* Contact form opens the visitor's email app, addressed to the official email */
   var cf = $('#contactForm');
   if (cf) cf.addEventListener('submit', function (e) {
-    e.preventDefault(); var ok = true;
+    e.preventDefault(); if (cf.elements.website && cf.elements.website.value) return; var ok = true;
     $$('[required]', cf).forEach(function (el) {
       var good = el.checkValidity(); el.closest('.field').classList.toggle('bad', !good);
       if (!good && ok) { el.focus(); ok = false; }
@@ -186,7 +191,7 @@
     var fd = new FormData(cf);
     location.href = 'mailto:techbridgebaslink@gmail.com?subject=' + encodeURIComponent('Enquiry from ' + fd.get('cn')) +
       '&body=' + encodeURIComponent(fd.get('cm') + '\n\nFrom: ' + fd.get('cn') + ' (' + fd.get('ce') + ')');
-    toast('Opening your email app...');
+    toast('Opening your email app...'); var cst = $('#cStatus'); if (cst) cst.textContent = 'Thank you. Your email app should open with your message ready to send. If it does not, email techbridgebaslink@gmail.com directly.';
   });
 
   /* FAQ accordion */
@@ -314,5 +319,96 @@
       };
       addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
     }
+  }
+
+  /* Time-aware greeting */
+  var gr = $('#greet');
+  if (gr) { var hr = new Date().getHours(); gr.textContent = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening'; }
+
+  /* Message counter on the contact form */
+  var cm = $('#cm'), cc = $('#cmCount');
+  if (cm && cc) cm.addEventListener('input', function () { cc.textContent = cm.value.length + ' / 1000'; });
+
+  /* Application form: keep details on this device until submitted or cleared */
+  var af = $('#applyForm');
+  if (af) {
+    var KEY = 'tb-apply', fields = ['name', 'email', 'level', 'why'], note = $('#savedNote');
+    var has = function (o) { return !!(o && (o.name || o.email || o.why || o.program || o.level)); };
+    var save = function () {
+      var o = {}; fields.forEach(function (k) { o[k] = af.elements[k].value; });
+      var pr = af.querySelector('input[name=program]:checked'); o.program = pr ? pr.value : '';
+      try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+      if (note) note.hidden = !has(o);
+    };
+    var saved = null; try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    if (saved) {
+      fields.forEach(function (k) { if (saved[k]) af.elements[k].value = saved[k]; });
+      if (saved.program && !new URLSearchParams(location.search).get('program')) {
+        var rr = af.querySelector('input[name=program][value="' + saved.program + '"]'); if (rr) rr.checked = true;
+      }
+      if (note) note.hidden = !has(saved);
+    }
+    af.addEventListener('input', save); af.addEventListener('change', save);
+    var clr = $('#clearForm');
+    if (clr) clr.addEventListener('click', function () {
+      af.reset(); try { localStorage.removeItem(KEY); } catch (e) {} if (note) note.hidden = true; toast('Your saved details were cleared');
+    });
+    af.addEventListener('submit', function () { setTimeout(function () { if (!$('#done').hidden) { try { localStorage.removeItem(KEY); } catch (e) {} } }, 0); });
+  }
+
+  /* Quick jump (Ctrl+K) */
+  var F = 'https://forms.gle/8EbdSy5ttGfLZfjv5', WA = 'https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS';
+  var QJ = [
+    ['Home', 'index.html#top', 'hero start', 'Page'], ['About TechBridge', 'index.html#about', 'learning experience bridge', 'Section'],
+    ['Programs', 'index.html#programs', 'data analytics web development', 'Section'], ['The 30-day internship', 'index.html#internship', 'practical recommendation letter', 'Section'],
+    ['Key facts', 'index.html#facts', 'duration start dates eligibility', 'Section'], ['Why join TechBridge', 'index.html#why', 'benefits reasons', 'Section'],
+    ['How to apply', 'index.html#apply', 'steps', 'Section'], ['Frequently asked questions', 'index.html#faq', 'faq help', 'Section'],
+    ['Application preparation page', 'apply.html', 'apply details', 'Page'], ['Community page', 'community.html', 'whatsapp', 'Page'],
+    ['Contact page', 'contact.html', 'email message', 'Page'], ['Open the official application form', F, 'apply form internship', 'Opens new tab'],
+    ['Join the WhatsApp Community', WA, 'join community chat', 'Opens new tab'], ['Download the info sheet (PDF)', 'techbridge-info-sheet.pdf', 'pdf fact sheet', 'Download'],
+    ['Email TechBridge', 'mailto:techbridgebaslink@gmail.com', 'contact email', 'Email']
+  ];
+  function openQJ() {
+    if ($('.qj')) return;
+    var prev = d.activeElement, idx = 0, shown = QJ.slice();
+    var o = d.createElement('div'); o.className = 'qj';
+    o.innerHTML = '<div class="qj-box" role="dialog" aria-modal="true" aria-label="Quick jump"><div class="qj-in"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="qjIn" placeholder="Where would you like to go?" autocomplete="off" aria-controls="qjList"><kbd>Esc</kbd></div><ul id="qjList" role="listbox"></ul></div>';
+    d.body.appendChild(o);
+    var inp = $('#qjIn', o), list = $('#qjList', o);
+    function close() { o.remove(); removeEventListener('keydown', onKey, true); if (prev && prev.focus) prev.focus(); }
+    function go(it) {
+      close();
+      if (it[3] === 'Opens new tab') open(it[1], '_blank', 'noopener');
+      else if (it[3] === 'Download') { var a = d.createElement('a'); a.href = it[1]; a.download = ''; d.body.appendChild(a); a.click(); a.remove(); }
+      else location.href = it[1];
+    }
+    function render() {
+      list.innerHTML = shown.length ? shown.map(function (it, k) {
+        return '<li role="option" class="' + (k === idx ? 'act' : '') + '" data-k="' + k + '"><a href="' + esc(it[1]) + '"><b>' + esc(it[0]) + '</b><span>' + esc(it[3]) + '</span></a></li>';
+      }).join('') : '<li class="qj-empty">Nothing found. Try "apply" or "contact".</li>';
+      var a = $('.act', list); if (a && a.scrollIntoView) a.scrollIntoView({ block: 'nearest' });
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); if (shown.length) { idx = (idx + 1) % shown.length; render(); } }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); if (shown.length) { idx = (idx - 1 + shown.length) % shown.length; render(); } }
+      else if (e.key === 'Enter' && shown[idx]) { e.preventDefault(); go(shown[idx]); }
+    }
+    inp.addEventListener('input', function () {
+      var q = inp.value.trim().toLowerCase(); idx = 0;
+      shown = QJ.filter(function (it) { return !q || (it[0] + ' ' + it[2]).toLowerCase().indexOf(q) > -1; }); render();
+    });
+    list.addEventListener('click', function (e) {
+      var li = e.target.closest('li[data-k]'); if (!li) return; e.preventDefault(); go(shown[+li.dataset.k]);
+    });
+    o.addEventListener('mousedown', function (e) { if (e.target === o) close(); });
+    addEventListener('keydown', onKey, true); render(); inp.focus();
+  }
+  addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openQJ(); } });
+  var qb = $('#qjBtn'); if (qb) qb.addEventListener('click', openQJ);
+
+  /* Install-as-app and offline support (works on https hosting such as GitHub Pages or Vercel) */
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
   }
 })();
