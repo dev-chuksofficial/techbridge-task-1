@@ -561,3 +561,8 @@ kbd{font-family:inherit;font-size:.75rem;border:1px solid currentColor;border-ra
 .count{display:block;text-align:right;font-size:.82rem;color:var(--muted);margin-top:.3rem}
 .hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
 .status{margin-top:1rem;color:var(--navy);font-weight:500}
+
+/* bridge is fully drawn from the first moment */
+.story-svg .sp{stroke-dashoffset:0}
+.story-svg .pulse-p{stroke-dasharray:.05 .95}
+.hero-art img{animation:none}
