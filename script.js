@@ -298,20 +298,12 @@
     var sps = $$('.sp', story), steps = $$('.story-step', story), sh = $('.sh', story), sn = $('.sn', story), pulse = $('.pulse-p', story);
     var l1 = $('.lbl1', story), l2 = $$('.lbl2', story), sbar = $('#storyBar');
     var setAll = function (p) {
-      sps.forEach(function (el) {
-        if (el === pulse) return;
-        var s = el.getAttribute('data-s');
-        el.style.strokeDashoffset = 1 - (s === '1' ? seg(p, 0, 0.3) : seg(p, 0.3, 0.62));
-      });
-      sh.setAttribute('opacity', seg(p, 0.45, 0.66)); sn.setAttribute('opacity', seg(p, 0.66, 0.85));
-      l1.setAttribute('opacity', seg(p, 0.05, 0.2)); l2.forEach(function (t) { t.setAttribute('opacity', seg(p, 0.7, 0.9)); });
-      pulse.setAttribute('opacity', p > 0.88 ? 1 : 0);
-      pulse.style.strokeDasharray = p > 0.88 ? '0.05 0.95' : '1';
+      /* The bridge is always fully drawn; only the text and progress bar follow the scroll. */
       var i = p < 0.33 ? 0 : p < 0.66 ? 1 : 2;
       steps.forEach(function (st, k) { st.classList.toggle('act', k === i); });
       sbar.style.width = (p * 100) + '%';
     };
-    if (reduce) { story.classList.add('static'); setAll(1); pulse.setAttribute('opacity', 0); }
+    if (reduce) { story.classList.add('static'); setAll(1); }
     else {
       var upd = function () {
         var r = story.getBoundingClientRect(), total = story.offsetHeight - innerHeight;
