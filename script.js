@@ -315,14 +315,4 @@
       addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
     }
   }
-
-  /* Cursor ring (desktop with a mouse only) */
-  if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    var ring = d.createElement('div'); ring.className = 'ring'; d.body.appendChild(ring);
-    var rx = 0, ry = 0, tx = 0, ty = 0;
-    addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; ring.classList.add('on'); });
-    d.addEventListener('mouseover', function (e) { ring.classList.toggle('hot', !!e.target.closest('a, button, label, .tilt')); });
-    d.addEventListener('mouseleave', function () { ring.classList.remove('on'); });
-    (function loop() { rx += (tx - rx) * 0.18; ry += (ty - ry) * 0.18; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(loop); })();
-  }
 })();
