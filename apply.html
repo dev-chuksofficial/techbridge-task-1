@@ -11,10 +11,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0D004D">
+<link rel="apple-touch-icon" href="images/icon-192.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="ann" id="ann"><p>Ready to apply? Complete the official TechBridge Internship Application Form. <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Open the form</a></p><button type="button" class="ann-x" id="annX" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
 <header class="site-header" id="siteHeader">
   <div class="wrap bar">
     <a class="brand" href="index.html" aria-label="TechBridge home"><img src="images/logo.png" alt="TechBridge" width="160" height="31"></a>
@@ -40,6 +44,7 @@
   <div class="demo-note reveal"><i class="fa-solid fa-circle-info"></i><p><strong>Two steps to apply.</strong> Prepare your details on this page, then submit the official TechBridge Internship Application Form. Nothing on this page is sent to TechBridge. <a class="link" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Go straight to the official form</a></p></div>
   <p class="ready reveal">Before you start, have these ready:</p><ul class="chips reveal"><li><i class="fa-solid fa-envelope"></i>Your email address</li><li><i class="fa-solid fa-laptop-code"></i>Your chosen program</li><li><i class="fa-solid fa-pen-nib"></i>Why you want to join</li></ul><div class="card reveal" id="formCard">
     <ol class="stp" aria-label="Application progress"><li class="on"><b>1</b><span>Your details</span></li><li><b>2</b><span>Your program</span></li><li><b>3</b><span>Review</span></li><div class="stp-line"><div id="fillbar"></div></div></ol>
+    <p class="saved" id="savedNote" hidden><i class="fa-solid fa-floppy-disk"></i> Your details are saved on this device only. <button type="button" class="linkish" id="clearForm">Clear my details</button></p>
     <form id="applyForm" novalidate>
       <div class="fstep">
         <h2>Your details</h2>
@@ -97,14 +102,17 @@
     </nav>
     <div>
       <a href="mailto:techbridgebaslink@gmail.com"><i class="fa-solid fa-envelope"></i> techbridgebaslink@gmail.com</a>
+      <a href="techbridge-info-sheet.pdf" download><i class="fa-solid fa-file-pdf"></i> Download the info sheet</a>
       <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Internship application form</a>
       <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Community</a>
     </div>
   </div>
-  <div class="wrap copy">&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</div>
+  <div class="wrap copy"><span>&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</span><button type="button" class="qj-btn" id="qjBtn"><i class="fa-solid fa-magnifying-glass"></i> Quick jump <kbd>Ctrl</kbd> <kbd>K</kbd></button></div>
 </footer>
+<a class="m-apply" id="mApply" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply for the internship</a>
 <button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
 <div class="toast" id="toast" role="status"></div>
+<script src="data.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
