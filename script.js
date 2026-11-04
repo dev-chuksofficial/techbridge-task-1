@@ -18,7 +18,7 @@
     if (bar) bar.style.transform = 'scaleX(' + (y / max) + ')';
     if (hdr) hdr.classList.toggle('scrolled', y > 40);
     if (topBtn) topBtn.classList.toggle('show', y > 600);
-    if (art && !reduce && y < 900) art.style.transform = 'translateY(' + (y * 0.12) + 'px)';
+    layers();
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
   if (topBtn) topBtn.addEventListener('click', function () { scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
@@ -271,5 +271,58 @@
       return p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + inner + '</a>' : '<div>' + inner + '</div>';
     }).join('');
     $('#partners').hidden = false;
+  }
+
+  /* Layered hero: foreground and background bridges move at different speeds */
+  var heroBg = $('.hero-bg'), mx = 0, my = 0;
+  function layers() {
+    var y = d.documentElement.scrollTop;
+    if (reduce || y > 1100) return;
+    if (art) art.style.transform = 'translate3d(' + (mx * -24) + 'px,' + (y * 0.12 + my * -16) + 'px,0)';
+    if (heroBg) heroBg.style.transform = 'translate3d(' + (mx * 38) + 'px,' + (y * -0.05 + my * 24) + 'px,0)';
+  }
+  if (hero && !reduce) hero.addEventListener('mousemove', function (e) {
+    var r = hero.getBoundingClientRect();
+    mx = (e.clientX - r.left) / r.width - 0.5; my = (e.clientY - r.top) / r.height - 0.5; layers();
+  });
+
+  /* Learn / Practise / Prove: the bridge builds as you scroll */
+  var story = $('#story');
+  if (story) {
+    var seg = function (p, a, b) { return Math.min(1, Math.max(0, (p - a) / (b - a))); };
+    var sps = $$('.sp', story), steps = $$('.story-step', story), sh = $('.sh', story), sn = $('.sn', story), pulse = $('.pulse-p', story);
+    var l1 = $('.lbl1', story), l2 = $$('.lbl2', story), sbar = $('#storyBar');
+    var setAll = function (p) {
+      sps.forEach(function (el) {
+        if (el === pulse) return;
+        var s = el.getAttribute('data-s');
+        el.style.strokeDashoffset = 1 - (s === '1' ? seg(p, 0, 0.3) : seg(p, 0.3, 0.62));
+      });
+      sh.setAttribute('opacity', seg(p, 0.45, 0.66)); sn.setAttribute('opacity', seg(p, 0.66, 0.85));
+      l1.setAttribute('opacity', seg(p, 0.05, 0.2)); l2.forEach(function (t) { t.setAttribute('opacity', seg(p, 0.7, 0.9)); });
+      pulse.setAttribute('opacity', p > 0.88 ? 1 : 0);
+      pulse.style.strokeDasharray = p > 0.88 ? '0.05 0.95' : '1';
+      var i = p < 0.33 ? 0 : p < 0.66 ? 1 : 2;
+      steps.forEach(function (st, k) { st.classList.toggle('act', k === i); });
+      sbar.style.width = (p * 100) + '%';
+    };
+    if (reduce) { story.classList.add('static'); setAll(1); pulse.setAttribute('opacity', 0); }
+    else {
+      var upd = function () {
+        var r = story.getBoundingClientRect(), total = story.offsetHeight - innerHeight;
+        setAll(Math.min(1, Math.max(0, -r.top / total)));
+      };
+      addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+    }
+  }
+
+  /* Cursor ring (desktop with a mouse only) */
+  if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var ring = d.createElement('div'); ring.className = 'ring'; d.body.appendChild(ring);
+    var rx = 0, ry = 0, tx = 0, ty = 0;
+    addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; ring.classList.add('on'); });
+    d.addEventListener('mouseover', function (e) { ring.classList.toggle('hot', !!e.target.closest('a, button, label, .tilt')); });
+    d.addEventListener('mouseleave', function () { ring.classList.remove('on'); });
+    (function loop() { rx += (tx - rx) * 0.18; ry += (ty - ry) * 0.18; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(loop); })();
   }
 })();
