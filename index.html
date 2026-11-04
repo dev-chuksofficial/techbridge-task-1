@@ -11,6 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0D004D">
+<link rel="apple-touch-icon" href="images/icon-192.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -40,7 +43,7 @@
   <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span><img class="hero-bg" src="images/bridge.svg" alt="" aria-hidden="true">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="kicker reveal">TechBridge by Baselink Services Limited</p>
+      <p class="kicker reveal"><span id="greet"></span>TechBridge by Baselink Services Limited</p>
       <h1 class="reveal" style="--d:.1s">Bridging Learning to Real-World Experience</h1>
       <p class="lead reveal" style="--d:.2s">TechBridge connects learners and aspiring interns with practical programs in Data Analytics and Web Development, so what you study becomes work you can show.</p>
       <div class="actions reveal" style="--d:.3s">
@@ -94,13 +97,13 @@
     <div class="head reveal"><h2>Programs open now</h2><p>Two focused tracks. Pick the one that matches the career you are building.</p></div>
     <div class="programs">
       <article class="program tilt reveal" data-r="zoom">
-        <span class="ico"><i class="fa-solid fa-chart-column"></i></span>
+        <svg class="art" viewBox="0 0 120 80" aria-hidden="true"><path pathLength="1" d="M10 70H112M10 70V8"/><path pathLength="1" d="M24 70V52H36V70M48 70V38H60V70M72 70V26H84V70M96 70V14H108V70"/><path class="g" pathLength="1" d="M30 44L54 30L78 18L102 6"/><circle cx="30" cy="44" r="3.6"/><circle cx="54" cy="30" r="3.6"/><circle cx="78" cy="18" r="3.6"/><circle cx="102" cy="6" r="3.6"/></svg>
         <h3>Data Analytics</h3>
         <p>Learn to turn raw data into clear answers. Work through practical exercises that build the habit of asking good questions and presenting findings.</p>
         <button type="button" class="link-btn" data-modal="m-da">Details</button><a class="link" href="apply.html?program=Data%20Analytics">Apply for this track <i class="fa-solid fa-arrow-right-long"></i></a>
       </article>
       <article class="program tilt reveal" data-r="zoom" style="--d:.15s">
-        <span class="ico"><i class="fa-solid fa-code"></i></span>
+        <svg class="art" viewBox="0 0 120 80" aria-hidden="true"><path pathLength="1" d="M12 8H108Q114 8 114 14V66Q114 72 108 72H12Q6 72 6 66V14Q6 8 12 8ZM6 24H114"/><path class="g" pathLength="1" d="M46 38L34 50L46 62M74 38L86 50L74 62M66 36L54 64"/><circle cx="16" cy="16" r="2.2"/><circle cx="26" cy="16" r="2.2"/><circle cx="36" cy="16" r="2.2"/><circle cx="34" cy="50" r="3.6"/><circle cx="86" cy="50" r="3.6"/></svg>
         <h3>Web Development</h3>
         <p>Learn to design and build real websites. Practise structuring pages, styling them well and making them work on every screen.</p>
         <button type="button" class="link-btn" data-modal="m-wd">Details</button><a class="link" href="apply.html?program=Web%20Development">Apply for this track <i class="fa-solid fa-arrow-right-long"></i></a>
@@ -114,9 +117,10 @@
     <div class="reveal" data-r="left">
       <p class="big-figure"><b data-count="30">30</b><span>days</span></p>
       <h2>The 30-Day Practical Internship</h2>
-      <div class="planks-wrap" aria-hidden="true">
-        <div class="planks" id="planks"></div>
+      <div class="planks-wrap">
+        <div class="planks" id="planks" aria-hidden="true"></div>
         <p class="plank-label">Day <b id="plankDay">0</b> of 30</p>
+        <input type="range" min="0" max="30" value="0" id="plankRange" class="range" aria-label="Drag to see the 30 days of the internship">
       </div>
     </div>
     <div class="reveal" data-r="right">
@@ -205,7 +209,7 @@
       <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Community</a>
     </div>
   </div>
-  <div class="wrap copy">&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</div>
+  <div class="wrap copy"><span>&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</span><button type="button" class="qj-btn" id="qjBtn"><i class="fa-solid fa-magnifying-glass"></i> Quick jump <kbd>Ctrl</kbd> <kbd>K</kbd></button></div>
 </footer>
 <a class="m-apply" id="mApply" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply for the internship</a>
 <button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
