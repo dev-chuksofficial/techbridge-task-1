@@ -621,3 +621,7 @@ kbd{font-family:inherit;font-size:.75rem;border:1px solid currentColor;border-ra
   .cmp td::before{content:attr(data-label);display:block;font-weight:600;color:var(--gold);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
   .ptabs{top:56px}
 }
+
+/* failsafe: the opening screen always disappears, even if scripts fail */
+.preloader{pointer-events:none;animation:preOut .6s 2.4s forwards}
+@keyframes preOut{to{opacity:0;visibility:hidden}}
