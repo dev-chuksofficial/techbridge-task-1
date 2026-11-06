@@ -2,10 +2,10 @@
 
 > **Bridging Learning to Real-World Experience**
 
-Hi, I'm **Nwadire Prosper Chukwuka AKA Chuks Official**, a web developer and frontend designer. This is my submission for **Task 1** of the TechBridge Web Development Internship: designing and building the homepage for **TechBridge by Baselink Services Limited**.
+Hi, I'm **Chuks Official**, a web developer and frontend designer. This is my submission for **Task 1** of the TechBridge Web Development Internship: designing and building the homepage for **TechBridge by Baselink Services Limited**.
 
-- **Live website:** [ _https://techbridge-task-1-pi.vercel.app/_](https://techbridge-task-1-pi.vercel.app/)
-- **Repository:** [_https://github.com/dev-chuksofficial/techbridge-task-1_](https://github.com/dev-chuksofficial/techbridge-task-1)
+- **Live website:** _add your live link here_
+- **Repository:** _add your GitHub link here_
 
 ![TechBridge homepage screenshot](images/screenshot.png)
 _Add a screenshot of the finished homepage as `images/screenshot.png`._
@@ -40,6 +40,7 @@ The brief asked for a site that feels like a real organization's, not a classroo
 | Page | What it does |
 |---|---|
 | `index.html` | The homepage: hero, about, programs, 30-day internship, key facts, why join, how to apply, community, FAQ, contact |
+| `programs.html` | **Task 2:** the dedicated Programs experience, with an overview, a "which sounds more like you?" picker, a full section and skills for each program, a filter, a side-by-side comparison and an apply call to action |
 | `apply.html` | A short three-step page to prepare your details before applying. It leads to the official form |
 | `community.html` | Explains the WhatsApp community and has the join button |
 | `contact.html` | The official contact channels, plus a message form that opens the visitor's email app |
@@ -49,6 +50,9 @@ The brief asked for a site that feels like a real organization's, not a classroo
 **Content and navigation**
 - Clear navigation with links between all pages, and a header that stays in view as you scroll
 - Key facts block, "Why join TechBridge" section, and an FAQ that opens and closes smoothly
+- A scroll story, *Learn, Practise, Prove*, where the bridge builds itself as you scroll, and a downloadable one-page info sheet (PDF)
+- Quick jump menu (press Ctrl+K), original circuit-style program illustrations, and a time-aware greeting
+- Installable as an app with offline support, and an application page that keeps your details on your device until you submit or clear them
 - Program detail popups, an announcement bar linking to the official form, and a closing call-to-action banner
 - Official email, LinkedIn and Facebook links, with Font Awesome icons
 
@@ -87,17 +91,24 @@ The form on `apply.html` only helps visitors prepare. It does **not** send or sa
 ```
 techbridge-task-1/
 ├── index.html
+├── programs.html
 ├── apply.html
 ├── community.html
 ├── contact.html
 ├── style.css
 ├── script.js
 ├── data.js
+├── sw.js
+├── manifest.webmanifest
+├── TESTING.md
+├── techbridge-info-sheet.pdf
 ├── README.md
 └── images/
     ├── logo.png
     ├── logo-white.png
     ├── favicon.png
+    ├── icon-192.png
+    ├── icon-512.png
     └── bridge.svg
 ```
 
