@@ -352,7 +352,7 @@
   var F = 'https://forms.gle/8EbdSy5ttGfLZfjv5', WA = 'https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS';
   var QJ = [
     ['Home', 'index.html#top', 'hero start', 'Page'], ['About TechBridge', 'index.html#about', 'learning experience bridge', 'Section'],
-    ['Programs', 'index.html#programs', 'data analytics web development', 'Section'], ['The 30-day internship', 'index.html#internship', 'practical recommendation letter', 'Section'],
+    ['Programs page', 'programs.html', 'data analytics web development skills compare', 'Page'], ['Programs overview on the homepage', 'index.html#programs', 'data analytics web development', 'Section'], ['The 30-day internship', 'index.html#internship', 'practical recommendation letter', 'Section'],
     ['Key facts', 'index.html#facts', 'duration start dates eligibility', 'Section'], ['Why join TechBridge', 'index.html#why', 'benefits reasons', 'Section'],
     ['How to apply', 'index.html#apply', 'steps', 'Section'], ['Frequently asked questions', 'index.html#faq', 'faq help', 'Section'],
     ['Application preparation page', 'apply.html', 'apply details', 'Page'], ['Community page', 'community.html', 'whatsapp', 'Page'],
@@ -402,5 +402,23 @@
   /* Install-as-app and offline support (works on https hosting such as GitHub Pages or Vercel) */
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
     addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+
+  /* Programs page: filter the program sections */
+  var ptabs = $$('.ptab');
+  if (ptabs.length) {
+    ptabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var f = t.dataset.filter;
+        ptabs.forEach(function (x) { x.classList.toggle('on', x === t); x.setAttribute('aria-pressed', x === t ? 'true' : 'false'); });
+        var first = null;
+        $$('.pgm').forEach(function (sec) {
+          var show = f === 'all' || sec.dataset.p === f;
+          sec.hidden = !show;
+          if (show) { $$('.reveal', sec).forEach(function (r) { r.classList.add('in'); }); if (!first) first = sec; }
+        });
+        if (first) first.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      });
+    });
   }
 })();
