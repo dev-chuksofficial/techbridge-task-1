@@ -1,0 +1,410 @@
+/* ==========================================================
+   TechBridge: Task Submission form fields
+   Link AFTER style.css:  <link rel="stylesheet" href="form-fields.css">
+   Everything is scoped to #subForm so nothing else on the site changes.
+   ========================================================== */
+
+#subForm {
+  --f-navy: #0d004d;
+  --f-navy-2: #2a1d7a;
+  --f-gold: #f2b705;
+  --f-ink: #1b1740;
+  --f-muted: #626682;
+  --f-line: #d4d8e6;
+  --f-line-hover: #aeb4cc;
+  --f-bg: #ffffff;
+  --f-soft: #f5f6fb;
+  --f-ok: #0f8a5f;
+  --f-err: #c62a3d;
+  --f-err-soft: #fdecee;
+  --f-radius: 10px;
+  --f-ring: 0 0 0 4px rgba(13, 0, 77, 0.12);
+  font-family: "Figtree", system-ui, sans-serif;
+  color: var(--f-ink);
+}
+
+#subForm h2 {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  line-height: 1.2;
+  margin: 0 0 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--f-line);
+  color: var(--f-navy);
+}
+
+/* ---------- Field wrapper ---------- */
+#subForm .field {
+  display: block;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+#subForm .field > label,
+#subForm .field > .lbl,
+#subForm legend.lbl {
+  display: block;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: var(--f-ink);
+}
+
+/* Required marker, added automatically */
+#subForm .field:has([required]) > label::after {
+  content: " *";
+  color: var(--f-err);
+  font-weight: 500;
+}
+
+/* ---------- Text, URL, select, textarea ---------- */
+#subForm input[type="text"],
+#subForm input[type="url"],
+#subForm select,
+#subForm textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--f-ink);
+  background-color: var(--f-bg);
+  border: 1.5px solid var(--f-line);
+  border-radius: var(--f-radius);
+  box-shadow: 0 1px 0 rgba(13, 0, 77, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#subForm input::placeholder,
+#subForm textarea::placeholder {
+  color: #9a9eb7;
+  opacity: 1;
+}
+
+#subForm input[type="text"]:hover,
+#subForm input[type="url"]:hover,
+#subForm select:hover,
+#subForm textarea:hover {
+  border-color: var(--f-line-hover);
+}
+
+#subForm input[type="text"]:focus,
+#subForm input[type="url"]:focus,
+#subForm select:focus,
+#subForm textarea:focus {
+  outline: none;
+  border-color: var(--f-navy);
+  box-shadow: var(--f-ring);
+}
+
+/* Select arrow */
+#subForm select {
+  padding-right: 3rem;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'%3E%3Cpath d='M1 1.5l6 6 6-6' stroke='%230d004d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.1rem center;
+}
+#subForm select:invalid { color: #9a9eb7; }
+#subForm select option { color: var(--f-ink); }
+
+/* Textarea */
+#subForm textarea {
+  min-height: 9rem;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Sentence counter */
+#subForm .count {
+  display: block;
+  margin-top: 0.4rem;
+  text-align: right;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--f-muted);
+  font-variant-numeric: tabular-nums;
+}
+#subForm .count.ok,
+#subForm .count.good,
+#subForm .count.valid { color: var(--f-ok); }
+#subForm .count.bad,
+#subForm .count.over,
+#subForm .count.err { color: var(--f-err); }
+
+/* ---------- File upload ---------- */
+#subForm input[type="file"] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.1rem 1rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--f-muted);
+  background: var(--f-soft);
+  border: 1.5px dashed var(--f-line-hover);
+  border-radius: var(--f-radius);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+#subForm input[type="file"]:hover {
+  border-color: var(--f-navy);
+  background: #eef0fa;
+}
+#subForm input[type="file"]:focus-visible {
+  outline: none;
+  border-color: var(--f-navy);
+  box-shadow: var(--f-ring);
+}
+#subForm input[type="file"]::file-selector-button {
+  margin-right: 1rem;
+  padding: 0.6rem 1.1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--f-navy);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+#subForm input[type="file"]::file-selector-button:hover {
+  background: var(--f-navy-2);
+}
+
+/* Screenshot preview */
+#subForm .shot-prev {
+  display: block;
+  max-width: 100%;
+  max-height: 260px;
+  margin-top: 0.9rem;
+  object-fit: contain;
+  background: var(--f-soft);
+  border: 1px solid var(--f-line);
+  border-radius: var(--f-radius);
+  padding: 0.35rem;
+}
+#subForm .shot-prev[hidden] { display: none; }
+
+/* ---------- Helper / error text ---------- */
+#subForm .field small {
+  margin-top: 0.45rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--f-err);
+}
+
+/* ---------- Error and valid states ----------
+   Covers several common class names so it works with the existing script. */
+#subForm .field.invalid input,
+#subForm .field.invalid select,
+#subForm .field.invalid textarea,
+#subForm .field.error input,
+#subForm .field.error select,
+#subForm .field.error textarea,
+#subForm .field.has-error input,
+#subForm .field.has-error select,
+#subForm .field.has-error textarea,
+#subForm .field.bad input,
+#subForm .field.bad select,
+#subForm .field.bad textarea,
+#subForm .field.err input,
+#subForm .field.err select,
+#subForm .field.err textarea,
+#subForm input[aria-invalid="true"],
+#subForm select[aria-invalid="true"],
+#subForm textarea[aria-invalid="true"] {
+  border-color: var(--f-err);
+  background-color: var(--f-err-soft);
+}
+
+#subForm .field.invalid input:focus,
+#subForm .field.invalid select:focus,
+#subForm .field.invalid textarea:focus,
+#subForm .field.error input:focus,
+#subForm .field.error select:focus,
+#subForm .field.error textarea:focus,
+#subForm .field.has-error input:focus,
+#subForm .field.has-error select:focus,
+#subForm .field.has-error textarea:focus,
+#subForm .field.bad input:focus,
+#subForm .field.bad select:focus,
+#subForm .field.bad textarea:focus,
+#subForm .field.err input:focus,
+#subForm .field.err select:focus,
+#subForm .field.err textarea:focus {
+  box-shadow: 0 0 0 4px rgba(198, 42, 61, 0.16);
+}
+
+#subForm .field.invalid small,
+#subForm .field.error small,
+#subForm .field.has-error small,
+#subForm .field.bad small,
+#subForm .field.err small {
+  display: block;
+}
+
+#subForm .field.valid input,
+#subForm .field.valid select,
+#subForm .field.valid textarea,
+#subForm .field.ok input,
+#subForm .field.ok select,
+#subForm .field.ok textarea {
+  border-color: var(--f-ok);
+}
+
+/* ---------- Checklist ---------- */
+#subForm fieldset.checks {
+  margin: 0 0 1.75rem;
+  padding: 1.25rem;
+  background: var(--f-soft);
+  border: 1px solid var(--f-line);
+  border-radius: 14px;
+}
+#subForm fieldset.checks legend.lbl {
+  float: left;
+  width: 100%;
+  margin: 0 0 0.9rem;
+}
+#subForm fieldset.checks legend.lbl + * { clear: both; }
+
+#subForm .check {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 0.55rem;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: var(--f-ink);
+  background: var(--f-bg);
+  border: 1.5px solid var(--f-line);
+  border-radius: var(--f-radius);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+#subForm .check:hover { border-color: var(--f-line-hover); }
+#subForm .check:has(input:checked) {
+  border-color: var(--f-navy);
+  background: #f1efff;
+}
+#subForm .check:has(input:focus-visible) {
+  box-shadow: var(--f-ring);
+  border-color: var(--f-navy);
+}
+
+#subForm .check input[type="checkbox"] {
+  flex: 0 0 auto;
+  display: grid;
+  place-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0;
+  background: #fff;
+  border: 1.75px solid var(--f-line-hover);
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+#subForm .check input[type="checkbox"]::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  transform: scale(0);
+  transition: transform 0.12s ease-out;
+  background: var(--f-navy);
+  clip-path: polygon(14% 44%, 0 59%, 40% 100%, 100% 22%, 85% 7%, 40% 68%);
+}
+#subForm .check input[type="checkbox"]:checked {
+  background: var(--f-gold);
+  border-color: var(--f-gold);
+}
+#subForm .check input[type="checkbox"]:checked::before { transform: scale(1); }
+#subForm .check input[type="checkbox"]:focus-visible { outline: none; }
+
+#subForm fieldset.checks > small { margin-top: 0.6rem; }
+
+/* ---------- Buttons row ---------- */
+#subForm .btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--f-line);
+}
+
+#subForm .btns .btn,
+#subDone .btn {
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--f-radius);
+  cursor: pointer;
+}
+
+/* ---------- Review summary ---------- */
+#subForm .summary {
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--f-line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+#subForm .summary dt {
+  padding: 0.85rem 1.1rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--f-muted);
+  background: var(--f-soft);
+}
+#subForm .summary dd {
+  margin: 0;
+  padding: 0.15rem 1.1rem 0.85rem;
+  font-size: 1rem;
+  color: var(--f-ink);
+  background: var(--f-soft);
+  border-bottom: 1px solid var(--f-line);
+  overflow-wrap: anywhere;
+}
+#subForm .summary dd:last-child { border-bottom: 0; }
+#subForm .summary img {
+  max-width: 100%;
+  max-height: 220px;
+  margin-top: 0.4rem;
+  border-radius: 8px;
+  border: 1px solid var(--f-line);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 560px) {
+  #subForm .btns { flex-direction: column-reverse; align-items: stretch; }
+  #subForm .btns .btn { width: 100%; justify-content: center; }
+  #subForm .btns > span:empty { display: none; }
+  #subForm input[type="file"]::file-selector-button {
+    display: block;
+    margin: 0 0 0.6rem;
+  }
+  #subForm fieldset.checks { padding: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #subForm * { transition: none !important; }
+}
