@@ -353,7 +353,7 @@
   var F = 'https://forms.gle/8EbdSy5ttGfLZfjv5', WA = 'https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS';
   var QJ = [
     ['Home', 'index.html#top', 'hero start', 'Page'], ['About TechBridge', 'index.html#about', 'learning experience bridge', 'Section'],
-    ['Programs page', 'programs.html', 'data analytics web development skills compare', 'Page'], ['Programs overview on the homepage', 'index.html#programs', 'data analytics web development', 'Section'], ['The 30-day internship', 'index.html#internship', 'practical recommendation letter', 'Section'],
+    ['Intern Portal', 'portal.html', 'platform dashboard register tracker submit', 'Page'], ['Task tracker', 'tracker.html', 'progress todo done', 'Page'], ['Intern registration', 'register.html', 'sign up profile onboarding', 'Page'], ['Submit task work', 'submit.html', 'submission github upload', 'Page'], ['Intern dashboard', 'dashboard.html', 'profile progress submissions', 'Page'], ['Internship tasks page', 'tasks.html', 'eight tasks roadmap days journey', 'Page'], ['Programs page', 'programs.html', 'data analytics web development skills compare', 'Page'], ['Programs overview on the homepage', 'index.html#programs', 'data analytics web development', 'Section'], ['The 30-day internship', 'index.html#internship', 'practical recommendation letter', 'Section'],
     ['Key facts', 'index.html#facts', 'duration start dates eligibility', 'Section'], ['Why join TechBridge', 'index.html#why', 'benefits reasons', 'Section'],
     ['How to apply', 'index.html#apply', 'steps', 'Section'], ['Frequently asked questions', 'index.html#faq', 'faq help', 'Section'],
     ['Application preparation page', 'apply.html', 'apply details', 'Page'], ['Community page', 'community.html', 'whatsapp', 'Page'],
@@ -422,4 +422,79 @@
       });
     });
   }
+
+  /* Internship tasks page: live status, day indicator, filter and expand all */
+  var road = $('.road');
+  if (road) {
+    var stops = $$('.stop', road), trk = $('#track');
+    var setSt = function (el, cls, txt) { var s = $('[data-st]', el); s.className = 'st ' + cls; s.textContent = txt; };
+    var t0 = new Date(trk.dataset.start + 'T00:00:00'), nw = new Date();
+    var dayN = Math.floor((new Date(nw.getFullYear(), nw.getMonth(), nw.getDate()) - t0) / 86400000) + 1;
+    if (dayN >= 1) {
+      var cur = null;
+      stops.forEach(function (s) { if (dayN >= +s.dataset.day) cur = s; });
+      stops.forEach(function (s) {
+        s.classList.remove('current');
+        if (dayN < +s.dataset.day) setSt(s, 'upcoming', 'Upcoming');
+        else if (s === cur && dayN <= 30) { s.classList.add('current'); setSt(s, 'current', 'Current task'); }
+        else setSt(s, 'available', 'Available');
+      });
+      var pct = Math.min(1, (dayN - 1) / 29) * 100, dn = $('#dayNow');
+      setTimeout(function () { $('#trackFill').style.width = pct + '%'; }, 400);
+      if (dayN <= 30) { var hr2 = $('#here'); hr2.style.left = pct + '%'; $('#hereDay').textContent = dayN; hr2.hidden = false; if (dn) dn.textContent = 'Today is Day ' + dayN + ' of 30.'; }
+      else if (dn) dn.textContent = 'The 30 days are complete.';
+    }
+    /* Task 4: the roadmap itself is interactive and tracks progress (shared with the tracker page) */
+    var PK = 'tb-portal-v1';
+    var rdp = function () { var o = {}; try { o = JSON.parse(localStorage.getItem(PK)) || {}; } catch (e) {} o.progress = o.progress || {}; return o; };
+    var base = {};
+    stops.forEach(function (s) { var st = $('[data-st]', s); base[s.id] = { c: st.className, t: st.textContent }; });
+    var tw = $('.track-wrap');
+    if (tw) { var mp = d.createElement('div'); mp.className = 'myprog'; mp.id = 'myProg'; mp.innerHTML = '<p><b>0</b> of 8 tasks completed</p><div class="pbar"><span></span></div>'; tw.appendChild(mp); }
+    stops.forEach(function (s) {
+      var seg = d.createElement('div'); seg.className = 'seg'; seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', 'Your progress on ' + s.id.replace('task-', 'task '));
+      seg.innerHTML = '<button type="button" data-s="todo">To do</button><button type="button" data-s="prog">In progress</button><button type="button" data-s="done">Done</button>';
+      var det = $('details', s); det.parentNode.insertBefore(seg, det);
+    });
+    var paint = function () {
+      var pr = rdp().progress, done = 0;
+      stops.forEach(function (s) {
+        var n = s.id.replace('task-', ''), v = pr[n], st = $('[data-st]', s), b = base[s.id];
+        if (v === 'done') { done++; setSt(s, 'done', 'Completed'); }
+        else if (v === 'prog') setSt(s, 'inprog', 'In progress');
+        else { st.className = b.c; st.textContent = b.t; }
+        $$('.seg button', s).forEach(function (btn) {
+          var on = btn.dataset.s === (v || 'todo');
+          btn.classList.remove('todo', 'prog', 'done'); btn.classList.toggle('on', on); if (on) btn.classList.add(btn.dataset.s); btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        var node = $('.tn[href="#task-' + n + '"]');
+        if (node) { node.classList.toggle('n-done', v === 'done'); node.classList.toggle('n-prog', v === 'prog'); }
+      });
+      var mpe = $('#myProg'); if (mpe) { $('b', mpe).textContent = done; $('.pbar span', mpe).style.width = (done / 8 * 100) + '%'; }
+      return done;
+    };
+    road.addEventListener('click', function (e) {
+      var bt = e.target.closest('.seg button'); if (!bt) return;
+      var o = rdp(), n = bt.closest('.stop').id.replace('task-', ''), before = Object.keys(o.progress).filter(function (k) { return o.progress[k] === 'done'; }).length;
+      if (bt.dataset.s === 'todo') delete o.progress[n]; else o.progress[n] = bt.dataset.s;
+      try { localStorage.setItem(PK, JSON.stringify(o)); } catch (er) {}
+      var done = paint(); if (done === 8 && before < 8 && window.tbConfetti) window.tbConfetti();
+    });
+    paint();
+    var ltabs = $$('.ltab[data-level]');
+    ltabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var f = t.dataset.level;
+        ltabs.forEach(function (x) { x.classList.toggle('on', x === t); x.setAttribute('aria-pressed', x === t ? 'true' : 'false'); });
+        stops.forEach(function (s) { var show = f === 'all' || s.dataset.level === f; s.hidden = !show; if (show) $$('.reveal', s).forEach(function (r) { r.classList.add('in'); }); });
+      });
+    });
+    var exb = $('#expandAll');
+    if (exb) exb.addEventListener('click', function () {
+      var open = exb.dataset.open !== '1';
+      $$('details', road).forEach(function (dt) { dt.open = open; });
+      exb.dataset.open = open ? '1' : '0'; exb.textContent = open ? 'Collapse all' : 'Expand all';
+    });
+  }
+  window.tbConfetti = confetti;
 })();

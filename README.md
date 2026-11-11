@@ -12,6 +12,21 @@ _Add a screenshot of the finished homepage as `images/screenshot.png`._
 
 ---
 
+## Screenshots
+
+Screenshots of each part of the site are in the `images` folder:
+
+| Part | File |
+|---|---|
+| Homepage (Task 1) | `images/screenshot.png` |
+| Programs page (Task 2) | `images/screenshot-programs.png` |
+| Internship Tasks page (Task 3) | `images/screenshot-tasks.png` |
+| Task tracker (Task 4) | `images/screenshot-tracker.png` |
+| Registration (Task 5) | `images/screenshot-register.png` |
+| Task submission (Task 6) | `images/screenshot-submit.png` |
+| Dashboard (Task 7) | `images/screenshot-dashboard.png` |
+| Intern Portal (Task 8) | `images/screenshot-portal.png` |
+
 ## What this project is
 
 TechBridge is preparing to establish its online presence, and it needed a homepage that introduces the organization to potential interns and learners. I built a small website of four linked pages that helps a first-time visitor quickly understand:
@@ -41,6 +56,12 @@ The brief asked for a site that feels like a real organization's, not a classroo
 |---|---|
 | `index.html` | The homepage: hero, about, programs, 30-day internship, key facts, why join, how to apply, community, FAQ, contact |
 | `programs.html` | **Task 2:** the dedicated Programs experience, with an overview, a "which sounds more like you?" picker, a full section and skills for each program, a filter, a side-by-side comparison and an apply call to action |
+| `tasks.html` | **Task 3:** the Internship Tasks experience, with all 8 tasks on a roadmap, a 30-day track, difficulty labels, task details, a filter and live status |
+| `portal.html` | **Task 8:** the complete Intern Portal hub that connects every part of the internship platform |
+| `register.html` | **Task 5:** intern registration and onboarding |
+| `tracker.html` | **Task 4:** interactive task tracker with saved progress |
+| `submit.html` | **Task 6:** task submission system |
+| `dashboard.html` | **Task 7:** intern dashboard |
 | `apply.html` | A short three-step page to prepare your details before applying. It leads to the official form |
 | `community.html` | Explains the WhatsApp community and has the join button |
 | `contact.html` | The official contact channels, plus a message form that opens the visitor's email app |
@@ -92,6 +113,13 @@ The form on `apply.html` only helps visitors prepare. It does **not** send or sa
 techbridge-task-1/
 ├── index.html
 ├── programs.html
+├── tasks.html
+├── portal.html
+├── register.html
+├── tracker.html
+├── submit.html
+├── dashboard.html
+├── portal.js
 ├── apply.html
 ├── community.html
 ├── contact.html
@@ -120,6 +148,68 @@ There is nothing to install or build.
 2. Open `index.html` in your browser.
 
 An internet connection is needed to load the fonts and icons.
+
+## Task 2: The Programs experience
+
+For Task 2, TechBridge wanted visitors to understand its learning programs more clearly, so I built a dedicated **Programs page** (`programs.html`) on top of my Task 1 website instead of starting a new project. It uses the same logo, navigation, buttons, colours, typography and footer, so it feels like part of the same site.
+
+**What the page includes**
+- **Programs overview:** explains that these are practical learning programs, designed to help learners move from learning to real-world experience
+- **"Which sounds more like you?":** two contrasting cards that separate the programs at a glance: *Data Analytics* is about working with data and extracting insights, and *Web Development* is about designing and building websites and web applications
+- **A full section for each program:** a short description, its one-line focus, and a card for every skill in the brief
+  - Data Analytics: spreadsheet analysis, data cleaning, SQL, data visualization, business-focused analysis
+  - Web Development: HTML, CSS, JavaScript, Git/GitHub, building web projects
+- **Expandable program information:** "What is this program about?", "Who is it for?" and "How do I get started?" open and close under each program
+- **Program filtering:** buttons to show all programs, only Data Analytics, or only Web Development
+- **Comparison table:** the two programs side by side, which stacks into readable blocks on mobile
+- **Call to action:** every "Apply for TechBridge Internship" button opens the official application form, and there is a link back to the homepage
+- **Navigation:** the header has Home and Programs links, and the homepage links to the full Programs page
+
+The page works with HTML and CSS alone. The filter buttons and expandable sections use a little JavaScript as an optional extra, and everything is still visible without it.
+
+### Developer note (Task 2)
+
+I approached the Programs page as a continuation of my Task 1 website, keeping the same logo colours, serif and sans-serif typography, buttons and footer so it feels like one brand. I presented the two programs as two contrasting cards at the top, then a full section for each with skill cards, and finally a side-by-side comparison, so visitors can tell them apart quickly. Along the way I learned how to organise a lot of information clearly, and how to build a comparison table that still reads well on a phone. My main challenge was making the two programs feel distinct while keeping the page consistent and using only the skills listed in the brief.
+
+## Task 3: The Internship Tasks experience
+
+For Task 3, a new intern needs to understand the whole internship journey, so I built a dedicated **Internship Tasks page** (`tasks.html`) and connected it to my earlier work. The header and footer now link **Home**, **Programs** and **Internship Tasks** to each other, and the page uses the same logo, colours, typography, buttons and footer as Tasks 1 and 2.
+
+**What the page includes**
+- **Introduction:** explains that TechBridge provides a structured 30-day practical internship of 8 tasks, where interns progressively develop their web development skills by completing practical projects
+- **All 8 tasks** with the official task number, title, day and description:
+  Task 1 (Day 1), Task 2 (Day 4), Task 3 (Day 8), Task 4 (Day 11), Task 5 (Day 15), Task 6 (Day 19), Task 7 (Day 22), Task 8 (Day 26)
+- **A roadmap timeline:** the tasks run down a vertical line in order, with the day shown on a marker and an arrow between each stop, so the sequence is easy to follow
+- **A 30-day track:** a line from Day 1 to Day 30 with the eight tasks placed at their days, which you can click to jump to a task
+- **Difficulty progression:** every task has a label, from Beginner up to Intermediate to Advanced Beginner, with a small meter that fills as the work gets harder
+- **Task details:** "View task details" opens what you are expected to build, the day it is introduced, the difficulty, what it builds on, and the technologies where they are known
+- **Task status:** each task shows Available, Upcoming or Current task
+- **Interactive progress (Task 4 on this page):** every task has To do, In progress and Done buttons, with a progress bar and coloured dots on the 30-day track. Progress is saved on the device and shared with the tracker page
+- **Extras:** a difficulty filter, an Expand all button, and a day indicator that shows where today falls in the 30 days
+
+The page works with HTML and CSS alone, and the expandable details use the native HTML `details` element. A small amount of JavaScript adds the filter, the live status and the day indicator as an optional extra, and everything is still visible without it.
+
+### Developer note (Task 3)
+
+I presented the eight tasks as a vertical roadmap, with a day marker on a central line and a card for each task, because a path makes the order and the growing difficulty easy to see at a glance. Above it I added a 30-day track that places each task on its day, and difficulty labels with a small meter that fill up as the tasks get harder. Each card has an expandable section so visitors can see what they are expected to build without crowding the page. I learned how to build a timeline that rearranges itself for mobile and how to use the native details element for expandable content. My main challenge was keeping the alternating timeline readable on small screens, which I solved by switching to a single column with the line on the left.
+
+## Tasks 4 to 8: The TechBridge Intern Portal
+
+For the second half of the internship, I turned the website into a small **internship platform**. All of it runs in the browser with HTML, CSS and JavaScript, and everything an intern enters is saved on their own device only. Nothing is sent to TechBridge from these pages.
+
+| Task | Page | What it does |
+|---|---|---|
+| Task 4: Interactive Task Tracker | `tracker.html` | Mark each of the 8 tasks as To do, In progress or Done, see a progress ring and a 30-day track, and filter by status |
+| Task 5: Intern Registration | `register.html` | A three-step onboarding form (account, profile, confirm) that creates the intern profile |
+| Task 6: Task Submission | `submit.html` | Prepare a submission with the task, GitHub link, live link, screenshot and a 3 to 5 sentence developer note, review it, and save it |
+| Task 7: Intern Dashboard | `dashboard.html` | Shows the profile, progress, tasks and submissions, with a download-my-data button |
+| Task 8: Complete Platform | `portal.html` | The portal home that connects everything, with a map of how all 8 tasks fit together |
+
+**How it fits together:** registration creates the profile, the tracker records progress, the submission page marks a task as done when work is submitted, and the dashboard and the Internship Tasks page read that same saved information. A portal navigation bar and the main header link every part.
+
+### Developer note (Tasks 4 to 8)
+
+I built the second half of the internship as one connected platform instead of five separate pages, so the registration, tracker, submission page and dashboard all share the same saved information. I used a small amount of JavaScript and the browser's local storage so progress and submissions stay when the intern comes back. I learned how to share state between pages, build a multi-step form with validation, and design a dashboard that works well when there is no data yet. My main challenge was keeping every page consistent while making each part feel useful on its own.
 
 ## Updating the content
 

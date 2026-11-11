@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task Tracker | TechBridge Intern Portal</title>
+<meta name="description" content="TechBridge by Baselink Services Limited offers Data Analytics and Web Development programs and a 30-day practical internship.">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__tbReady){document.documentElement.classList.remove('js');var p=document.getElementById('preloader');if(p)p.remove();}},3500)</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0D004D">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ann" id="ann"><p>Ready to apply? Complete the official TechBridge Internship Application Form. <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Open the form</a></p><button type="button" class="ann-x" id="annX" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
+<header class="site-header" id="siteHeader">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="TechBridge home"><img src="images/logo.png" alt="TechBridge" width="160" height="31"></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+    <label for="nav-toggle" class="burger" aria-hidden="true"><i></i></label>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="tasks.html">Internship Tasks</a>
+      <a href="portal.html">Intern Portal</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Apply now</a>
+    </nav>
+  </div>
+  <div class="scroll-bar" id="scrollBar"></div>
+</header>
+<main id="main">
+<section class="page-hero"><span class="orb o1"></span><span class="orb o2"></span><img class="ph-art" src="images/bridge.svg" alt="" aria-hidden="true">
+  <div class="wrap"><p class="crumb reveal"><a href="index.html">Home</a> <i class="fa-solid fa-chevron-right"></i> Task tracker</p>
+  <h1 class="reveal" style="--d:.1s"><i class="fa-solid fa-chart-line"></i> Interactive Task Tracker</h1><p class="lead reveal" style="--d:.2s">Mark each internship task as To do, In progress or Done, and watch your progress grow.</p></div></section><nav class="pnav" aria-label="Intern portal"><div class="wrap"><span class="pn-t"><i class="fa-solid fa-id-badge"></i> Intern Portal</span><a href="portal.html">Overview</a><a href="register.html">Register</a><a href="tracker.html">Task tracker</a><a href="submit.html">Submit work</a><a href="dashboard.html">Dashboard</a><a href="tasks.html">All tasks</a></div></nav>
+
+<section class="section tint"><div class="wrap">
+<noscript><p class="demo-note">This part of the portal needs JavaScript to work. Please turn JavaScript on in your browser.</p></noscript>
+<div class="demo-note reveal"><i class="fa-solid fa-circle-info"></i><p>Your progress is saved on this device only, so it is still here when you come back.</p></div>
+<div class="trk-top reveal"><div class="card trk-ring"><div class="ring-box" id="trkRing"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring-bg" cx="60" cy="60" r="54"/><circle class="ring-fg" cx="60" cy="60" r="54"/></svg><span class="ring-t">0%</span></div><div><h2>Your progress</h2><p class="muted"><b id="cDone">0</b> of 8 tasks done</p><p class="muted" id="dayLbl"></p></div></div>
+<div class="stats"><div class="stat"><b id="cTodo">8</b><span>To do</span></div><div class="stat prog"><b id="cProg">0</b><span>In progress</span></div><div class="stat done"><b id="cDone2">0</b><span>Done</span></div></div></div>
+<div class="track-wrap reveal"><h3 class="track-h">Your 30-day track</h3><div class="dtrack" id="trkTrack"><a class="tn" data-n="1" style="left:0.00%" href="#t1" aria-label="Task 1, Day 1"><b>1</b><span>Day 1</span></a><a class="tn" data-n="2" style="left:10.34%" href="#t2" aria-label="Task 2, Day 4"><b>2</b><span>Day 4</span></a><a class="tn" data-n="3" style="left:24.14%" href="#t3" aria-label="Task 3, Day 8"><b>3</b><span>Day 8</span></a><a class="tn" data-n="4" style="left:34.48%" href="#t4" aria-label="Task 4, Day 11"><b>4</b><span>Day 11</span></a><a class="tn" data-n="5" style="left:48.28%" href="#t5" aria-label="Task 5, Day 15"><b>5</b><span>Day 15</span></a><a class="tn" data-n="6" style="left:62.07%" href="#t6" aria-label="Task 6, Day 19"><b>6</b><span>Day 19</span></a><a class="tn" data-n="7" style="left:72.41%" href="#t7" aria-label="Task 7, Day 22"><b>7</b><span>Day 22</span></a><a class="tn" data-n="8" style="left:86.21%" href="#t8" aria-label="Task 8, Day 26"><b>8</b><span>Day 26</span></a><span class="tend" style="left:100%"><b><i class="fa-solid fa-flag-checkered"></i></b><span>Day 30</span></span></div><p class="track-note">Green dots are done, outlined dots are in progress.</p></div>
+<div class="card next reveal" id="nextUp"></div>
+<div class="ltabs" role="group" aria-label="Filter tasks by status"><button type="button" class="ltab ftab on" data-f="all" aria-pressed="true">All</button><button type="button" class="ltab ftab" data-f="todo" aria-pressed="false">To do</button><button type="button" class="ltab ftab" data-f="prog" aria-pressed="false">In progress</button><button type="button" class="ltab ftab" data-f="done" aria-pressed="false">Done</button><button type="button" class="ltab ex" id="resetProg">Reset progress</button></div>
+<ul class="tlist" id="trackerList"></ul>
+</div></section>
+</main>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand" href="index.html"><img src="images/logo-white.png" alt="TechBridge" width="170" height="33"></a>
+      <p class="tag">Bridging Learning to Real-World Experience</p>
+      <p class="small">TechBridge by Baselink Services Limited</p>
+      <div class="soc">
+  <a href="https://www.linkedin.com/company/techbridge-services/" target="_blank" rel="noopener" aria-label="TechBridge on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+  <a href="https://www.facebook.com/p/Baselink-Services-100066771475783/" target="_blank" rel="noopener" aria-label="TechBridge on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+  <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener" aria-label="TechBridge WhatsApp Community"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="mailto:techbridgebaslink@gmail.com" aria-label="Email TechBridge"><i class="fa-solid fa-envelope"></i></a>
+</div>
+    </div>
+    <nav aria-label="Footer">
+      <a href="programs.html">Programs</a>
+      <a href="tasks.html">Internship Tasks</a>
+      <a href="portal.html">Intern Portal</a>
+      <a href="apply.html">Apply</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div>
+      <a href="mailto:techbridgebaslink@gmail.com"><i class="fa-solid fa-envelope"></i> techbridgebaslink@gmail.com</a>
+      <a href="techbridge-info-sheet.pdf" download><i class="fa-solid fa-file-pdf"></i> Download the info sheet</a>
+      <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Internship application form</a>
+      <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Community</a>
+    </div>
+  </div>
+  <div class="wrap copy"><span>&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</span><button type="button" class="qj-btn" id="qjBtn"><i class="fa-solid fa-magnifying-glass"></i> Quick jump <kbd>Ctrl</kbd> <kbd>K</kbd></button></div>
+</footer>
+<a class="m-apply" id="mApply" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply for the internship</a>
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
+<div class="toast" id="toast" role="status"></div>
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script src="portal.js"></script>
+</body>
+</html>
