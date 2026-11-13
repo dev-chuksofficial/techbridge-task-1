@@ -15,16 +15,16 @@
 
   /* ---------- shared data ---------- */
   var KEY = 'tb-portal-v1';
-  var LV = { 1: 'Beginner', 2: 'Beginner \u2192 Intermediate', 3: 'Intermediate', 4: 'Intermediate \u2192 Advanced Beginner' };
+  var LV = { 1: 'Beginner', 2: 'Beginner \u2192 Intermediate', 3: 'Intermediate' };
   var T = [
     [1, 1, 'Build the TechBridge Homepage', 'Create the first version of the TechBridge website using HTML and CSS.', 1],
-    [2, 4, 'Build the TechBridge Programs Experience', "Create a Programs experience that presents TechBridge's available learning programs.", 2],
+    [2, 4, 'Build the TechBridge Programs Experience', "Create a Programs experience presenting TechBridge's available learning programs.", 1],
     [3, 8, 'Build the Internship Tasks Experience', 'Create an interface that presents the TechBridge internship tasks and helps users understand the internship journey.', 2],
-    [4, 11, 'Build an Interactive Task Tracker', 'Use JavaScript to make the internship task experience interactive and allow progress to be tracked.', 3],
-    [5, 15, 'Build the Intern Registration Experience', 'Create a professional registration/onboarding interface for TechBridge interns.', 3],
+    [4, 11, 'Build an Interactive Internship Roadmap', 'Use JavaScript to allow visitors to switch between the Data Analytics and Web Development internship tracks.', 2],
+    [5, 15, 'Build the Intern Registration Experience', 'Create a professional registration and onboarding interface for TechBridge interns.', 3],
     [6, 19, 'Build the Task Submission System', 'Create an interface through which interns can prepare and submit their task work.', 3],
-    [7, 22, 'Build the Intern Dashboard', 'Create a dashboard where an intern can view their profile, progress, tasks, and submissions.', 4],
-    [8, 26, 'Build the Complete TechBridge Internship Platform', 'Combine the different components created during the internship into a complete TechBridge platform.', 4]
+    [7, 22, 'Build the Intern Dashboard', 'Create a dashboard where an intern can view their profile, progress, tasks and submissions.', 3],
+    [8, 26, 'Build the Complete TechBridge Internship Platform', 'Combine the different components created during the internship into a complete TechBridge platform.', 3]
   ];
   var STATUS = { todo: 'To do', prog: 'In progress', done: 'Done' };
   function load() {
@@ -238,7 +238,7 @@
   var dash = $('#dash');
   function renderDash() {
     var c = counts(), dn = today(), pr = S.profile, nx = T.filter(function (t) { return stat(t[0]) !== 'done'; })[0];
-    var groups = [1, 2, 3, 4].map(function (l) {
+    var groups = [1, 2, 3].map(function (l) {
       var ts = T.filter(function (t) { return t[4] === l; }), dn2 = ts.filter(function (t) { return stat(t[0]) === 'done'; }).length;
       return '<div class="grp"><div class="grp-h"><span class="lvl l' + l + '"><span class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' + LV[l] + '</span><b>' + dn2 + '/' + ts.length + '</b></div><div class="pbar"><span style="width:' + (dn2 / ts.length * 100) + '%"></span></div></div>';
     }).join('');

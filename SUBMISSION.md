@@ -1,13 +1,13 @@
 # Submission Pack
 
-One section for each internship task. For every task, submit four things: the **GitHub repository link**, the **live website link**, a **screenshot**, and the **developer note**.
+One section for each internship task. For every task, submit the **GitHub repository link**, the **live website link**, the **screenshot(s)** and the **developer note**.
 
 **Fill in once, use for every task**
 
 - GitHub repository: `https://github.com/YOUR-USERNAME/techbridge-task-1`
 - Live website: `https://YOUR-SITE.vercel.app`
 
-The developer notes below are drafts written from what was actually built. Read each one, change anything that is not true for you, and keep it to 3 to 5 sentences.
+The developer notes below are drafts written from what was actually built. Read each one, change anything that is not true for you, and keep to the sentence count the task asks for (Task 4 asks for 5 to 7 sentences, the others 3 to 5).
 
 ---
 
@@ -47,15 +47,25 @@ I presented the eight tasks as a vertical roadmap, with a day marker on a centra
 
 ---
 
-## Task 4: Build an Interactive Task Tracker
+## Task 4: Build an Interactive Internship Roadmap
 
-- **Page:** `tracker.html (and the interactive tasks.html)`
-- **Live link:** `https://YOUR-SITE.vercel.app/tracker.html`
-- **Screenshot:** `images/screenshot-tracker.png`
+- **Page:** `roadmap.html`
+- **Live link:** `https://YOUR-SITE.vercel.app/roadmap.html`
+- **Screenshot:** `images/screenshot-roadmap-data-analytics.png and images/screenshot-roadmap-web-development.png`
 
 **Developer note**
 
-I made the task experience interactive by letting interns mark each task as To do, In progress or Done, and by showing progress on a ring, a 30-day track and a progress bar. Progress is saved in the browser so it is still there after a refresh, and it is shared between the tracker page and the Internship Tasks page. I learned how to store and read data with local storage and how to update the page whenever that data changes. My main challenge was keeping the status labels in step between two different pages.
+I structured the roadmap as two tracks, Data Analytics and Web Development, each shown with the same layout: a "Currently viewing" banner, a 30-day line, a difficulty chart and eight task cards. When a visitor selects a track, a click event listener calls a showTrack function that updates the page without refreshing it. I stored the task information in a JavaScript object where each track holds an array of eight task objects, each with a number, title, day, description and difficulty. I used variables, arrays, objects, functions, event listeners, conditional logic and DOM manipulation, and I labelled each one in the code comments. One challenge was keeping every part of the page in step when the track changes, because the banner, the day line, the difficulty chart and the task cards all depend on the selected track. I solved it by putting all of the updates inside the single showTrack function, so one choice refreshes everything in the same way every time.
+
+**Extra requirements for Task 4 (only you can do these)**
+
+- [ ] Follow the official TechBridge Instagram account: https://www.instagram.com/techbridgeserves
+- [ ] Follow the official TechBridge LinkedIn page: https://www.linkedin.com/company/techbridge-services/
+- [ ] Take a screenshot as evidence of each follow (Instagram, and LinkedIn)
+- [ ] Upload the screenshots to Google Drive (or another place), and set the link so anyone with it can view
+- [ ] Paste the screenshot links in the comment section of the TechBridge Task Submission Form
+
+**A note on the screenshots.** The Task 4 brief mentions screenshots in two ways: "Data Analytics selected" and "Web Development selected" in the Submission section, and follow evidence labelled as the "Data Analytics screenshot" (Instagram) and "Web Development screenshot" (LinkedIn) in the checklist. To be safe, submit all four: the two roadmap screenshots in `images/` and your two follow screenshots.
 
 ---
 
@@ -113,4 +123,4 @@ For the final task I connected every part of the website into one platform, with
 - [ ] The live website shows the newest version (I hard-refreshed with Ctrl+F5)
 - [ ] I opened the page on my phone and on a desktop
 - [ ] I clicked the Apply and WhatsApp buttons and they open the right links
-- [ ] I added the screenshot and read my developer note
+- [ ] I added the screenshot(s) and read my developer note

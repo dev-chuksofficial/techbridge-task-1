@@ -353,7 +353,7 @@
   var F = 'https://forms.gle/8EbdSy5ttGfLZfjv5', WA = 'https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS';
   var QJ = [
     ['Home', 'index.html#top', 'hero start', 'Page'], ['About TechBridge', 'index.html#about', 'learning experience bridge', 'Section'],
-    ['Intern Portal', 'portal.html', 'platform dashboard register tracker submit', 'Page'], ['Task tracker', 'tracker.html', 'progress todo done', 'Page'], ['Intern registration', 'register.html', 'sign up profile onboarding', 'Page'], ['Submit task work', 'submit.html', 'submission github upload', 'Page'], ['Intern dashboard', 'dashboard.html', 'profile progress submissions', 'Page'], ['Internship tasks page', 'tasks.html', 'eight tasks roadmap days journey', 'Page'], ['Programs page', 'programs.html', 'data analytics web development skills compare', 'Page'], ['Programs overview on the homepage', 'index.html#programs', 'data analytics web development', 'Section'], ['The 30-day internship', 'index.html#internship', 'practical recommendation letter', 'Section'],
+    ['Internship roadmap (two tracks)', 'roadmap.html', 'data analytics web development track switch tasks days', 'Page'], ['Intern Portal', 'portal.html', 'platform dashboard register tracker submit', 'Page'], ['My progress tracker', 'tracker.html', 'progress todo done', 'Page'], ['Intern registration', 'register.html', 'sign up profile onboarding', 'Page'], ['Submit task work', 'submit.html', 'submission github upload', 'Page'], ['Intern dashboard', 'dashboard.html', 'profile progress submissions', 'Page'], ['Internship tasks page', 'tasks.html', 'eight tasks roadmap days journey', 'Page'], ['Programs page', 'programs.html', 'data analytics web development skills compare', 'Page'], ['Programs overview on the homepage', 'index.html#programs', 'data analytics web development', 'Section'], ['The 30-day internship', 'index.html#internship', 'practical recommendation letter', 'Section'],
     ['Key facts', 'index.html#facts', 'duration start dates eligibility', 'Section'], ['Why join TechBridge', 'index.html#why', 'benefits reasons', 'Section'],
     ['How to apply', 'index.html#apply', 'steps', 'Section'], ['Frequently asked questions', 'index.html#faq', 'faq help', 'Section'],
     ['Application preparation page', 'apply.html', 'apply details', 'Page'], ['Community page', 'community.html', 'whatsapp', 'Page'],
@@ -425,7 +425,7 @@
 
   /* Internship tasks page: live status, day indicator, filter and expand all */
   var road = $('.road');
-  if (road) {
+  if (road && $('#track')) {
     var stops = $$('.stop', road), trk = $('#track');
     var setSt = function (el, cls, txt) { var s = $('[data-st]', el); s.className = 'st ' + cls; s.textContent = txt; };
     var t0 = new Date(trk.dataset.start + 'T00:00:00'), nw = new Date();

@@ -102,7 +102,7 @@ I use this list to test the site before I submit. I tick each box only after I h
 
 # Tasks 4 to 8: Intern Portal Testing
 
-**Task 4: Tracker**
+**My progress tracker (extra)**
 - [ ] Each task can be set to To do, In progress or Done, and the ring and counts update
 - [ ] Progress is still there after I refresh the page
 - [ ] The filter and "Reset progress" work
@@ -124,3 +124,35 @@ I use this list to test the site before I submit. I tick each box only after I h
 - [ ] "Intern Portal" is in the main navigation on every page and the portal bar works on all portal pages
 - [ ] The Internship Tasks page shows a task as Completed after I mark it Done
 - [ ] Everything looks right on desktop, tablet and mobile
+
+---
+
+# Task 4: Interactive Internship Roadmap Testing
+
+**Test 1: Initial page**
+- [ ] A track is displayed when `roadmap.html` opens
+- [ ] The correct 8 tasks appear for that track
+- [ ] The selected track is clearly shown, both on the button and in the "Currently viewing" banner
+
+**Test 2: Data Analytics** (click Data Analytics)
+- [ ] All 8 tasks appear, numbered 1 to 8
+- [ ] Days are 1, 4, 8, 11, 15, 19, 22 and 26
+- [ ] Titles, descriptions and difficulty levels match the official Data Analytics track
+
+**Test 3: Web Development** (click Web Development)
+- [ ] All 8 tasks appear, numbered 1 to 8
+- [ ] Days are 1, 4, 8, 11, 15, 19, 22 and 26
+- [ ] Titles, descriptions and difficulty levels match the official Web Development track
+
+**Test 4: Switching**
+- [ ] Switch Data Analytics, Web Development, Data Analytics, Web Development, and the information changes correctly each time without the page refreshing
+
+**Test 5: Navigation**
+- [ ] I can move between Home, Programs and Internship Roadmap using the header
+
+**Test 6: Responsive design**
+- [ ] Desktop, tablet and mobile all look right, and the track buttons are easy to tap on a phone
+
+**Also check**
+- [ ] The page says it is a 30-Day Practical Internship, and the day-by-day line and difficulty chart show the progression
+- [ ] There are no errors in the browser console
