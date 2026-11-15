@@ -4,8 +4,8 @@
 
 Hi, I'm **Chuks Official**, a web developer and frontend designer. This is my submission for **Task 1** of the TechBridge Web Development Internship: designing and building the homepage for **TechBridge by Baselink Services Limited**.
 
-- **Live website:** _[add your live link here](https://techbridge-task-1-pi.vercel.app/)_
-- **Repository:** _[add your GitHub link here](https://github.com/dev-chuksofficial/techbridge-task-1)_
+- **Live website:** _(https://techbridge-task-1-pi.vercel.app/)_
+- **Repository:** _(https://github.com/dev-chuksofficial/techbridge-task-1)_
 
 ![TechBridge homepage screenshot](images/screenshot.png)
 _Add a screenshot of the finished homepage as `images/screenshot.png`._
