@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Challenge Hub | TechBridge Practical Challenges</title>
+<meta name="description" content="Explore practical Data Analytics and Web Development challenges from TechBridge. Filter by track or difficulty and open any challenge for the full details.">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__tbReady){document.documentElement.classList.remove('js');var p=document.getElementById('preloader');if(p)p.remove();}},3500)</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0D004D">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ann" id="ann"><p>Ready to apply? Complete the official TechBridge Internship Application Form. <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Open the form</a></p><button type="button" class="ann-x" id="annX" aria-label="Dismiss announcement"><i class="fa-solid fa-xmark"></i></button></div>
+<header class="site-header" id="siteHeader">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="TechBridge home"><img src="images/logo.png" alt="TechBridge" width="160" height="31"></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+    <label for="nav-toggle" class="burger" aria-hidden="true"><i></i></label>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="roadmap.html">Internship Roadmap</a>
+      <a href="challenges.html">Challenges</a>
+      <a href="portal.html">Intern Portal</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Apply now</a>
+    </nav>
+  </div>
+  <div class="scroll-bar" id="scrollBar"></div>
+</header>
+<main id="main">
+<section class="page-hero"><span class="orb o1"></span><span class="orb o2"></span><img class="ph-art" src="images/bridge.svg" alt="" aria-hidden="true">
+  <div class="wrap"><p class="crumb reveal"><a href="index.html">Home</a> <i class="fa-solid fa-chevron-right"></i> Challenge Hub</p>
+  <h1 class="reveal" style="--d:.1s"><i class="fa-solid fa-trophy"></i> TechBridge Challenge Hub</h1><p class="lead reveal" style="--d:.2s">Explore practical challenges designed to help TechBridge interns apply their skills and gain real-world experience, in Data Analytics and Web Development.</p></div></section>
+<section class="section ch-intro"><div class="wrap">
+<div class="trio reveal"><div class="mini"><i class="fa-solid fa-layer-group"></i><h3>1. Pick a track</h3><p>Data Analytics or Web Development, or see both.</p></div><div class="mini"><i class="fa-solid fa-signal"></i><h3>2. Check the difficulty</h3><p>Beginner, Intermediate or Advanced, shown on every card.</p></div><div class="mini"><i class="fa-solid fa-hand-pointer"></i><h3>3. Open a challenge</h3><p>Press View Challenge to see what to build, the skills and the steps.</p></div></div>
+<p class="ch-note reveal"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> These are practice challenges that show the kind of work you can do. The official internship tasks are on the <a class="link" href="roadmap.html">Internship Roadmap</a>.</p>
+</div></section>
+<section class="ch-hub" id="hub" aria-labelledby="hubTitle"><div class="wrap">
+<h2 id="hubTitle" class="sr">Browse challenges</h2>
+<div class="ch-tools" role="search">
+<div class="ch-search"><label for="chSearch" class="sr">Search challenges by name</label><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" id="chSearch" placeholder="Search challenges or skills" autocomplete="off"></div>
+<div class="ch-group"><span class="ch-lab" id="labTrack">Track</span><div class="ch-btns" id="chTrack" role="group" aria-labelledby="labTrack"><button type="button" class="ptab on" data-value="all" aria-pressed="true">All</button><button type="button" class="ptab" data-value="data-analytics" aria-pressed="false">Data Analytics</button><button type="button" class="ptab" data-value="web-development" aria-pressed="false">Web Development</button></div></div>
+<div class="ch-group"><span class="ch-lab" id="labLevel">Difficulty</span><div class="ch-btns" id="chLevel" role="group" aria-labelledby="labLevel"><button type="button" class="ptab on" data-value="all" aria-pressed="true">All</button><button type="button" class="ptab" data-value="Beginner" aria-pressed="false">Beginner</button><button type="button" class="ptab" data-value="Intermediate" aria-pressed="false">Intermediate</button><button type="button" class="ptab" data-value="Advanced" aria-pressed="false">Advanced</button></div></div>
+<div class="ch-row"><div class="ch-sort"><label for="chSort">Sort by</label><select id="chSort"><option value="default">Default order</option><option value="easy">Easiest first</option><option value="hard">Hardest first</option></select></div><button type="button" class="ch-reset" id="chReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset filters</button></div>
+</div>
+<div class="ch-status"><p class="ch-count" id="chCount" role="status" aria-live="polite">Showing 12 of 12 challenges</p>
+<div class="ch-progress"><p><strong id="chDone">0</strong> of 12 completed <span>(saved on this device)</span></p><div class="ch-bar" role="progressbar" aria-label="Challenges completed" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><span id="chBarFill"></span></div></div></div>
+<div class="ch-grid" id="chGrid">
+<article class="ch-card ch-da" data-id="sales-analysis" data-track="data-analytics" data-level="Beginner" data-order="0">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Data Analytics</span><span class="ch-level lv1"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Beginner</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-cart-shopping"></i></span><h3>Small Shop Sales Analysis</h3>
+<p class="ch-desc">Explore a month of sales records for a small shop and find which products and days perform best.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A one-page summary that names the top products, the best sales days and one recommendation for the shop.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 2–3 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="sales-analysis" aria-haspopup="dialog" aria-label="View Challenge: Small Shop Sales Analysis">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-da" data-id="expense-analysis" data-track="data-analytics" data-level="Beginner" data-order="1">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Data Analytics</span><span class="ch-level lv1"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Beginner</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-wallet"></i></span><h3>Monthly Expense Analysis</h3>
+<p class="ch-desc">Clean up a messy list of expenses and show where the money goes each month.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A tidy expense table and a chart that shows spending by category.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 2–3 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="expense-analysis" aria-haspopup="dialog" aria-label="View Challenge: Monthly Expense Analysis">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-da" data-id="customer-analysis" data-track="data-analytics" data-level="Intermediate" data-order="2">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Data Analytics</span><span class="ch-level lv2"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Intermediate</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-users"></i></span><h3>Customer Analysis</h3>
+<p class="ch-desc">Group customers by how often and how much they buy, and spot who matters most to the business.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A customer summary that shows top customers, repeat buyers and one idea for keeping them.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 3–4 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="customer-analysis" aria-haspopup="dialog" aria-label="View Challenge: Customer Analysis">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-da" data-id="employee-data-analysis" data-track="data-analytics" data-level="Intermediate" data-order="3">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Data Analytics</span><span class="ch-level lv2"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Intermediate</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-id-card"></i></span><h3>Employee Data Analysis</h3>
+<p class="ch-desc">Analyse a small staff dataset to compare departments, roles and pay patterns.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A short report that compares departments and highlights two useful patterns with charts.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 3–4 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="employee-data-analysis" aria-haspopup="dialog" aria-label="View Challenge: Employee Data Analysis">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-da" data-id="business-dashboard" data-track="data-analytics" data-level="Intermediate" data-order="4">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Data Analytics</span><span class="ch-level lv2"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Intermediate</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><h3>Business Sales Dashboard</h3>
+<p class="ch-desc">Build a simple dashboard that shows how a business performs month by month.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A dashboard with key totals, a monthly trend and a top-products chart that a manager can read in a minute.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4–5 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="business-dashboard" aria-haspopup="dialog" aria-label="View Challenge: Business Sales Dashboard">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-da" data-id="churn-analysis" data-track="data-analytics" data-level="Advanced" data-order="5">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Data Analytics</span><span class="ch-level lv3"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Advanced</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-user-minus"></i></span><h3>Customer Churn Analysis</h3>
+<p class="ch-desc">Study which customers stopped buying and look for the patterns behind it.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A findings report that names the strongest churn patterns and suggests two ways to reduce churn.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5–6 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="churn-analysis" aria-haspopup="dialog" aria-label="View Challenge: Customer Churn Analysis">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-wd" data-id="landing-page" data-track="web-development" data-level="Beginner" data-order="6">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-code" aria-hidden="true"></i> Web Development</span><span class="ch-level lv1"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Beginner</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-window-maximize"></i></span><h3>Responsive Landing Page</h3>
+<p class="ch-desc">Build a one-page landing page for a made-up product or service that works on any screen.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A clean landing page with a hero, a features section and a call to action that looks right on a phone and a laptop.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 3–4 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="landing-page" aria-haspopup="dialog" aria-label="View Challenge: Responsive Landing Page">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-wd" data-id="contact-form" data-track="web-development" data-level="Beginner" data-order="7">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-code" aria-hidden="true"></i> Web Development</span><span class="ch-level lv1"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Beginner</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-envelope-open-text"></i></span><h3>Contact Form with Validation</h3>
+<p class="ch-desc">Create a contact form that checks what visitors type before it is sent.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A form that shows clear error messages and a success message without refreshing the page.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 2–3 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="contact-form" aria-haspopup="dialog" aria-label="View Challenge: Contact Form with Validation">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-wd" data-id="portfolio-website" data-track="web-development" data-level="Intermediate" data-order="8">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-code" aria-hidden="true"></i> Web Development</span><span class="ch-level lv2"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Intermediate</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-id-badge"></i></span><h3>Personal Portfolio Website</h3>
+<p class="ch-desc">Design a portfolio website that introduces you and shows your work.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A multi-section portfolio with navigation, an about section, project cards and contact links, published online.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5–6 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="portfolio-website" aria-haspopup="dialog" aria-label="View Challenge: Personal Portfolio Website">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-wd" data-id="product-page" data-track="web-development" data-level="Intermediate" data-order="9">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-code" aria-hidden="true"></i> Web Development</span><span class="ch-level lv2"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Intermediate</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-bag-shopping"></i></span><h3>Product Page</h3>
+<p class="ch-desc">Build a product page with an image area, details and an option picker.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A product page where choosing an option updates what the visitor sees, without a page refresh.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4–5 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="product-page" aria-haspopup="dialog" aria-label="View Challenge: Product Page">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-wd" data-id="responsive-business-site" data-track="web-development" data-level="Intermediate" data-order="10">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-code" aria-hidden="true"></i> Web Development</span><span class="ch-level lv2"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Intermediate</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-building"></i></span><h3>Responsive Business Website</h3>
+<p class="ch-desc">Create a small multi-page website for a made-up local business.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A three-page website with shared navigation and styling that looks right on a phone, a tablet and a laptop.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5–6 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="responsive-business-site" aria-haspopup="dialog" aria-label="View Challenge: Responsive Business Website">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+<article class="ch-card ch-wd" data-id="task-board" data-track="web-development" data-level="Advanced" data-order="11">
+<div class="ch-top"><span class="ch-track"><i class="fa-solid fa-code" aria-hidden="true"></i> Web Development</span><span class="ch-level lv3"><span class="ch-bars" aria-hidden="true"><i></i><i></i><i></i></span>Advanced</span></div>
+<div class="ch-body"><span class="ch-ico" aria-hidden="true"><i class="fa-solid fa-list-check"></i></span><h3>Interactive Task Board</h3>
+<p class="ch-desc">Build a task board where visitors add, move, filter and remove tasks.</p>
+<p class="ch-out"><strong>Expected outcome</strong>A working task board that remembers its tasks after a refresh and works well on mobile.</p></div>
+<div class="ch-foot"><div class="ch-meta"><span class="ch-time"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6–8 hours</span><span class="ch-done" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Completed</span></div><button type="button" class="btn btn-navy ch-view" data-id="task-board" aria-haspopup="dialog" aria-label="View Challenge: Interactive Task Board">View Challenge <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+</article>
+</div>
+<div class="ch-empty" id="chEmpty" hidden><i class="fa-regular fa-face-frown" aria-hidden="true"></i><h3>No challenges found</h3><p>Nothing matches those filters. Try a different track, difficulty or search word.</p><button type="button" class="btn btn-navy" id="chEmptyReset">Reset filters</button></div>
+<noscript><p class="ch-note">Filtering and the challenge details need JavaScript. All challenges are listed above.</p></noscript>
+</div></section>
+<dialog class="modal ch-modal" id="chModal" aria-labelledby="chmTitle"><button type="button" class="x" data-close aria-label="Close challenge details"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><div id="chmBody"></div></dialog>
+<section class="cta"><span class="orb o1"></span><span class="orb o2"></span><div class="wrap cta-in reveal"><h2>Ready for the real thing?</h2><p>Try a challenge to practise, then apply through the official TechBridge Internship Application Form.</p><div class="actions"><a class="btn btn-gold" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply for TechBridge Internship</a><a class="btn btn-ghost" href="roadmap.html"><i class="fa-solid fa-signs-post"></i> See the internship roadmap</a><a class="btn btn-ghost" href="programs.html"><i class="fa-solid fa-layer-group"></i> View programs</a></div></div></section>
+</main>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand" href="index.html"><img src="images/logo-white.png" alt="TechBridge" width="170" height="33"></a>
+      <p class="tag">Bridging Learning to Real-World Experience</p>
+      <p class="small">TechBridge by Baselink Services Limited</p>
+      <div class="soc">
+  <a href="https://www.linkedin.com/company/techbridge-services/" target="_blank" rel="noopener" aria-label="TechBridge on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+  <a href="https://www.facebook.com/p/Baselink-Services-100066771475783/" target="_blank" rel="noopener" aria-label="TechBridge on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+  <a href="https://www.instagram.com/techbridgeserves" target="_blank" rel="noopener" aria-label="TechBridge on Instagram"><i class="fa-brands fa-instagram"></i></a>
+  <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener" aria-label="TechBridge WhatsApp Community"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="mailto:techbridgebaslink@gmail.com" aria-label="Email TechBridge"><i class="fa-solid fa-envelope"></i></a>
+</div>
+    </div>
+    <nav aria-label="Footer">
+      <a href="programs.html">Programs</a>
+      <a href="roadmap.html">Internship Roadmap</a>
+      <a href="challenges.html">Challenges</a>
+      <a href="tasks.html">Internship Tasks</a>
+      <a href="portal.html">Intern Portal</a>
+      <a href="apply.html">Apply</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div>
+      <a href="mailto:techbridgebaslink@gmail.com"><i class="fa-solid fa-envelope"></i> techbridgebaslink@gmail.com</a>
+      <a href="techbridge-info-sheet.pdf" download><i class="fa-solid fa-file-pdf"></i> Download the info sheet</a>
+      <a href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Internship application form</a>
+      <a href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Community</a>
+    </div>
+  </div>
+  <div class="wrap copy"><span>&copy; 2026 TechBridge by Baselink Services Limited. All rights reserved.</span><button type="button" class="qj-btn" id="qjBtn"><i class="fa-solid fa-magnifying-glass"></i> Quick jump <kbd>Ctrl</kbd> <kbd>K</kbd></button></div>
+</footer>
+<a class="m-apply" id="mApply" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener"><i class="fa-solid fa-file-pen"></i> Apply for the internship</a>
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
+<div class="toast" id="toast" role="status"></div>
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script src="challenges.js"></script>
+</body>
+</html>

@@ -4,8 +4,8 @@
 
 Hi, I'm **Chuks Official**, a web developer and frontend designer. This is my submission for **Task 1** of the TechBridge Web Development Internship: designing and building the homepage for **TechBridge by Baselink Services Limited**.
 
-- **Live website:** _(https://techbridge-task-1-pi.vercel.app/)_
-- **Repository:** _(https://github.com/dev-chuksofficial/techbridge-task-1)_
+- **Live website:** _add your live link here_
+- **Repository:** _add your GitHub link here_
 
 ![TechBridge homepage screenshot](images/screenshot.png)
 _Add a screenshot of the finished homepage as `images/screenshot.png`._
@@ -23,6 +23,7 @@ Screenshots of each part of the site are in the `images` folder:
 | Internship Tasks page (Task 3) | `images/screenshot-tasks.png` |
 | Roadmap with Data Analytics selected (Task 4) | `images/screenshot-roadmap-data-analytics.png` |
 | Roadmap with Web Development selected (Task 4) | `images/screenshot-roadmap-web-development.png` |
+| Challenge Hub (Task 5, official brief) | `images/screenshot-challenges.png` _(add your own screenshot of the live page)_ |
 | My progress tracker | `images/screenshot-tracker.png` |
 | Registration (Task 5) | `images/screenshot-register.png` |
 | Task submission (Task 6) | `images/screenshot-submit.png` |
@@ -62,6 +63,7 @@ The brief asked for a site that feels like a real organization's, not a classroo
 | `portal.html` | **Task 8:** the complete Intern Portal hub that connects every part of the internship platform |
 | `register.html` | **Task 5:** intern registration and onboarding |
 | `roadmap.html` | **Task 4:** the interactive internship roadmap, with a track selector for Data Analytics and Web Development |
+| `challenges.html` | **Task 5 (official brief):** the Challenge Hub, with 12 challenges, track and difficulty filters, search, sorting and a details popup |
 | `tracker.html` | My progress tracker (an extra): mark my own tasks and see my progress |
 | `submit.html` | **Task 6:** task submission system |
 | `dashboard.html` | **Task 7:** intern dashboard |
@@ -125,6 +127,8 @@ techbridge-task-1/
 ├── dashboard.html
 ├── portal.js
 ├── roadmap.js
+├── challenges.html
+├── challenges.js
 ├── apply.html
 ├── community.html
 ├── contact.html
@@ -134,6 +138,7 @@ techbridge-task-1/
 ├── sw.js
 ├── manifest.webmanifest
 ├── TESTING.md
+├── SUBMISSION.md
 ├── techbridge-info-sheet.pdf
 ├── README.md
 └── images/
@@ -224,6 +229,37 @@ No frameworks are used, only HTML, CSS and plain JavaScript.
 ### Developer note (Task 4)
 
 I structured the roadmap as two tracks, Data Analytics and Web Development, each shown with the same layout: a "Currently viewing" banner, a 30-day line, a difficulty chart and eight task cards. When a visitor selects a track, a click event listener calls a `showTrack` function that updates the page without refreshing it. I stored the task information in a JavaScript object where each track holds an array of eight task objects, each with a number, title, day, description and difficulty. I used variables, arrays, objects, functions, event listeners, conditional logic and DOM manipulation, and I labelled each one in the code comments. One challenge was keeping every part of the page in step when the track changes, because the banner, the day line, the difficulty chart and the task cards all depend on the selected track. I solved it by putting all of the updates inside the single `showTrack` function, so one choice refreshes everything in the same way every time.
+
+## Task 5: The Challenge Hub
+
+> **Note on numbering.** The official Task 5 brief is the **Challenge Hub**. The registration, submission, dashboard and portal pages that my earlier drafts labelled "Tasks 5 to 8" are extra platform work, and they stay in this project.
+
+For Task 5, a visitor should be able to explore the kind of challenges they would work on, not just read about the two tracks. I built a **Challenge Hub** (`challenges.html`, with `challenges.js`) on top of my earlier pages. It uses the same logo, colours, fonts, buttons, header and footer, and it is linked from the main navigation, the homepage and the Programs page.
+
+**What the page includes**
+- **A clear introduction:** a title, a short explanation of what the hub is for, and three quick steps (pick a track, check the difficulty, open a challenge)
+- **12 challenges:** 6 Data Analytics and 6 Web Development, written as realistic work for a learner
+  - Data Analytics: Small Shop Sales Analysis, Monthly Expense Analysis, Customer Analysis, Employee Data Analysis, Business Sales Dashboard, Customer Churn Analysis
+  - Web Development: Responsive Landing Page, Contact Form with Validation, Personal Portfolio Website, Product Page, Responsive Business Website, Interactive Task Board
+- **Challenge cards:** each card shows the challenge name, its track, a difficulty badge with a small bar meter (so difficulty is not shown by colour alone), a short description, the expected outcome, the estimated time and a **View Challenge** button
+- **Challenge details popup:** a native `dialog` that opens without leaving the page, with the objective, what to produce, skills required, tools that may be used, estimated time, expected result and suggested steps
+- **Track filter:** All, Data Analytics, Web Development
+- **Difficulty filter:** All, Beginner, Intermediate, Advanced. Both filters work together, for example Web Development + Beginner
+- **Extras:** search by name, skill or tool, sorting by difficulty, a "Showing X of 12" count, a "No challenges found" message with a reset button, a **Reset filters** button, smooth card animations, different card styles for each track, and a progress indicator (a "Mark as completed" button in the popup, saved on the device only)
+- **Deep links:** `challenges.html#landing-page` opens that challenge directly
+
+**JavaScript used** (all in `challenges.js`, with comments)
+- **State:** one `state` object holds the track, difficulty, search text and sort choice
+- **Data:** a `CHALLENGES` array of objects holds the full details of every challenge
+- **Functions:** `applyFilters`, `matches`, `resetFilters`, `renderModal`, `openChallenge`, `updateProgress`
+- **Events:** click, input and change listeners, with event delegation on the grid
+- **DOM:** the popup is built with `createElement` and `textContent`, and cards are shown or hidden with the `hidden` attribute, so nothing refreshes
+
+The cards are written in the HTML, so every challenge is still visible if JavaScript is off.
+
+### Developer note (Task 5)
+
+I built the Challenge Hub as a continuation of the Task 4 roadmap, keeping the TechBridge colours, fonts, buttons and navigation so it feels like one website. The twelve challenges are cards in the HTML, and a JavaScript array holds their full details, so one click on View Challenge opens a popup without refreshing the page. The track filter, difficulty filter, search and sorting all run through one applyFilters function that reads a single state object, which keeps them working together. I learned how to combine several filters at once and how to build an accessible popup with the native dialog element. My main challenge was keeping the filters, the result count and the "no results" message in step, which I solved by updating all of them inside that one function.
 
 ## Tasks 5 to 8: The TechBridge Intern Portal
 

@@ -69,6 +69,27 @@ I structured the roadmap as two tracks, Data Analytics and Web Development, each
 
 ---
 
+## Task 5 (official brief): Build a TechBridge Challenge Section
+
+- **Page:** `challenges.html` (with `challenges.js`)
+- **Live link:** `https://YOUR-SITE.vercel.app/challenges.html`
+- **Screenshot:** `images/screenshot-challenges.png` (take this yourself from the live page, then add it)
+
+**Developer note**
+
+I built the Challenge Hub as a continuation of the Task 4 roadmap, keeping the TechBridge colours, fonts, buttons and navigation so it feels like one website. The twelve challenges are cards in the HTML, and a JavaScript array holds their full details, so one click on View Challenge opens a popup without refreshing the page. The track filter, difficulty filter, search and sorting all run through one applyFilters function that reads a single state object, which keeps them working together. I learned how to combine several filters at once and how to build an accessible popup with the native dialog element. My main challenge was keeping the filters, the result count and the "no results" message in step, which I solved by updating all of them inside that one function.
+
+**Submission steps from the brief**
+
+- [ ] Use the same email address as your previous submissions
+- [ ] Submit your live website link and make sure it opens correctly
+- [ ] Test every filter and every View Challenge button on the live site before you submit
+- [ ] Do not submit an incomplete project
+
+---
+
+> **Numbering note:** the official Task 5 is the Challenge Hub above. The registration, submission, dashboard and portal sections below are extra platform work that my earlier drafts labelled Tasks 5 to 8. Check the official brief for each task before you submit.
+
 ## Task 5: Build the Intern Registration Experience
 
 - **Page:** `register.html`

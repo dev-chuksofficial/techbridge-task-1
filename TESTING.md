@@ -156,3 +156,41 @@ I use this list to test the site before I submit. I tick each box only after I h
 **Also check**
 - [ ] The page says it is a 30-Day Practical Internship, and the day-by-day line and difficulty chart show the progression
 - [ ] There are no errors in the browser console
+
+---
+
+# Task 5 (official brief): Challenge Hub Testing
+
+**Page**
+- [ ] The Challenge Hub has a clear title and introduction
+- [ ] Data Analytics challenges are shown (6)
+- [ ] Web Development challenges are shown (6)
+- [ ] At least 6 challenges are available in total (there are 12)
+
+**Challenge information**
+- [ ] Every challenge has a title, a track, a difficulty, a description and an expected outcome
+
+**JavaScript**
+- [ ] Track filter: All, Data Analytics and Web Development each show the right challenges
+- [ ] Difficulty filter: All, Beginner, Intermediate and Advanced each show the right challenges
+- [ ] The track and difficulty filters work together (for example Web Development + Beginner shows 2)
+- [ ] Every View Challenge button opens the popup with the right details, without refreshing the page
+- [ ] The popup closes with the X button, the Back to challenges button, the Esc key and a click outside it
+- [ ] Search finds challenges by name or skill, and the "No challenges found" message and Reset filters button work
+- [ ] Sorting by Easiest first and Hardest first works
+- [ ] "Mark as completed" updates the progress bar and is still there after a refresh
+- [ ] There are no broken buttons or interactions
+
+**Design and responsiveness**
+- [ ] The page matches the rest of the TechBridge website (colours, fonts, buttons, header, footer)
+- [ ] Desktop (about 1280px): three columns of cards, filters easy to use
+- [ ] Tablet (about 768px): two columns of cards
+- [ ] Mobile (about 390px): one column, filter buttons wrap neatly, popup fits the screen, no sideways scrolling
+- [ ] Text and buttons are easy to read
+- [ ] The Challenges link appears in the header, footer and portal navigation, and in Quick jump (Ctrl+K)
+
+**Final testing**
+- [ ] I tested all buttons and all filters
+- [ ] I checked my live website link and the page loads correctly
+- [ ] I added `images/screenshot-challenges.png`
+- [ ] I reviewed my work before submission
