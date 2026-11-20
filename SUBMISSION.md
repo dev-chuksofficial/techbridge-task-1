@@ -114,6 +114,27 @@ I built the submission page so an intern can choose a task, add a repository lin
 
 ---
 
+## Task 6 (official brief): Build the TechBridge Intern Dashboard
+
+- **Page:** `dashboard.html` (with `dashboard.js`)
+- **Live link:** `https://YOUR-SITE.vercel.app/dashboard.html`
+- **Screenshot:** `images/screenshot-intern-dashboard.png` (take this yourself from the live page, then add it)
+
+**Developer note**
+
+I built the Intern Dashboard so that the whole page is driven by one JavaScript array of tasks and one status object. The task cards, the progress numbers, the progress bar and the filter counts are all produced from that data, so when I click Mark as Completed one function updates everything at once without a refresh. I learned how to calculate and display progress percentages, how to generate HTML from an array, and how to keep a popup, filters and counts in sync. The hardest part was making sure every part of the page changed together, including the welcome status and the Continue Task button, which I solved by re-rendering from the same data after every change. I also added a Technology Explorer so the dashboard explains the frameworks and backend tools used to build a complete web platform.
+
+**Before you submit**
+
+- [ ] Use the same email address as your previous submissions
+- [ ] Submit your live website link and make sure it opens correctly
+- [ ] Test every button, filter, popup and the Technology Explorer on the live site
+- [ ] Do not submit an incomplete project
+
+---
+
+> **Numbering note:** the official Task 6 is the Intern Dashboard above. The older portal summary page is now `portal-dashboard.html`.
+
 ## Task 7: Build the Intern Dashboard
 
 - **Page:** `dashboard.html`

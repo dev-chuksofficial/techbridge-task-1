@@ -27,7 +27,8 @@ Screenshots of each part of the site are in the `images` folder:
 | My progress tracker | `images/screenshot-tracker.png` |
 | Registration (Task 5) | `images/screenshot-register.png` |
 | Task submission (Task 6) | `images/screenshot-submit.png` |
-| Dashboard (Task 7) | `images/screenshot-dashboard.png` |
+| Dashboard (Task 7, my portal summary) | `images/screenshot-dashboard.png` |
+| Intern Dashboard (Task 6, official brief) | `images/screenshot-intern-dashboard.png` _(add your own screenshot of the live page)_ |
 | Intern Portal (Task 8) | `images/screenshot-portal.png` |
 
 ## What this project is
@@ -66,7 +67,8 @@ The brief asked for a site that feels like a real organization's, not a classroo
 | `challenges.html` | **Task 5 (official brief):** the Challenge Hub, with 12 challenges, track and difficulty filters, search, sorting and a details popup |
 | `tracker.html` | My progress tracker (an extra): mark my own tasks and see my progress |
 | `submit.html` | **Task 6:** task submission system |
-| `dashboard.html` | **Task 7:** intern dashboard |
+| `dashboard.html` | **Task 6 (official brief):** the interactive Intern Dashboard (progress, task tracker, Challenge Hub link, technology explorer) |
+| `portal-dashboard.html` | The earlier portal summary: profile, progress and saved submissions (this was `dashboard.html` before Task 6) |
 | `apply.html` | A short three-step page to prepare your details before applying. It leads to the official form |
 | `community.html` | Explains the WhatsApp community and has the join button |
 | `contact.html` | The official contact channels, plus a message form that opens the visitor's email app |
@@ -125,6 +127,8 @@ techbridge-task-1/
 ├── tracker.html
 ├── submit.html
 ├── dashboard.html
+├── dashboard.js
+├── portal-dashboard.html
 ├── portal.js
 ├── roadmap.js
 ├── challenges.html
@@ -232,7 +236,7 @@ I structured the roadmap as two tracks, Data Analytics and Web Development, each
 
 ## Task 5: The Challenge Hub
 
-> **Note on numbering.** The official Task 5 brief is the **Challenge Hub**. The registration, submission, dashboard and portal pages that my earlier drafts labelled "Tasks 5 to 8" are extra platform work, and they stay in this project.
+> **Note on numbering.** The official Task 5 brief is the **Challenge Hub** and the official Task 6 brief is the **Intern Dashboard**. The registration, submission, dashboard and portal pages that my earlier drafts labelled "Tasks 5 to 8" are extra platform work, and they stay in this project.
 
 For Task 5, a visitor should be able to explore the kind of challenges they would work on, not just read about the two tracks. I built a **Challenge Hub** (`challenges.html`, with `challenges.js`) on top of my earlier pages. It uses the same logo, colours, fonts, buttons, header and footer, and it is linked from the main navigation, the homepage and the Programs page.
 
@@ -261,6 +265,37 @@ The cards are written in the HTML, so every challenge is still visible if JavaSc
 
 I built the Challenge Hub as a continuation of the Task 4 roadmap, keeping the TechBridge colours, fonts, buttons and navigation so it feels like one website. The twelve challenges are cards in the HTML, and a JavaScript array holds their full details, so one click on View Challenge opens a popup without refreshing the page. The track filter, difficulty filter, search and sorting all run through one applyFilters function that reads a single state object, which keeps them working together. I learned how to combine several filters at once and how to build an accessible popup with the native dialog element. My main challenge was keeping the filters, the result count and the "no results" message in step, which I solved by updating all of them inside that one function.
 
+## Task 6: The Intern Dashboard
+
+For Task 6, I built an **Interactive Intern Dashboard** (`dashboard.html`, with `dashboard.js`) that makes the website behave like a real internship platform. It reuses the TechBridge header, footer, colours, fonts and buttons, and it connects to the Challenge Hub from Task 5. The page that used to be `dashboard.html` (profile and saved submissions) moved to `portal-dashboard.html` so nothing was lost.
+
+**What the dashboard includes**
+- **Welcome section:** a sample intern (Alex) with the track, a short welcome message and the internship status. If you have registered in the Intern Portal, your own name appears instead. A **Continue Task** button opens the task you should work on next.
+- **Internship Progress:** "5 / 8 Tasks Completed", the percentage, a visual progress bar, tasks remaining, and counts for completed, in progress and not started, plus a strip of 8 squares that shows each task's status.
+- **Task Tracker:** Tasks 1 to 8 as cards, each with the task number, title, short description, status and buttons. Completed, In Progress and Not Started tasks have clearly different styles.
+- **Interactive tracker:** **Mark as Completed** changes the status and instantly updates the completed count, the remaining count, the percentage, the bar, the status text and the filter counts, without refreshing. **Start Task** moves a task to In Progress and **Undo** reopens a completed task.
+- **Task filters:** All, Completed, In Progress, Not Started, plus a search box and a "No tasks found" message.
+- **View Task:** a popup (native `dialog`) with the details of the task, plus a link to the page it built.
+- **Challenge Hub connection:** a section that shows the live number of challenges, how many you have completed, three beginner starting points and an **Explore Challenges** button.
+- **Modern Web Technologies and Technology Explorer:** buttons for **Next.js**, **Vue.js**, **Angular** and **Backend** that swap the content on the page. Each one explains what it is and what it is commonly used for and has a Learn More link. The Backend panel explains how the frontend and backend connect and introduces Node.js, Express.js, Django, Flask, Laravel and .NET.
+- **Extras:** progress saved with `localStorage`, a notification when a task is completed, a celebration when all 8 tasks are completed, a Continue Task button, search, and a reset button.
+
+**JavaScript used** (all in `dashboard.js`, with comments)
+- **Data:** the `TASKS` array of objects. The task cards are generated from it, not typed into the HTML
+- **State:** one `status` object records every task's status and is saved in `localStorage` (`tb-dashboard-v1`)
+- **Functions:** `counts`, `percent`, `renderProgress`, `renderTasks`, `setStatus`, `setFilter`, `openTask`, `showTech`
+- **Events:** click handlers with event delegation, input for search, keyboard arrows for the technology tabs
+- **Calculations:** progress = completed tasks / total tasks * 100, shown as 37.5%, 50%, 62.5% and so on
+
+**Notes**
+- Tasks 1 to 6 use the task names and briefs that TechBridge shared. **Tasks 7 and 8 show "to be announced"** because their briefs have not been shared. When you receive them, edit the `TASKS` array in `dashboard.js`.
+- The sample starting progress is Tasks 1 to 5 completed, Task 6 in progress, and Tasks 7 and 8 not started. The dashboard's progress is separate from the Intern Portal tracker, so the two never overwrite each other.
+- The Challenge Hub list (`challenges.js`) is shared with the dashboard through `window.TB_CHALLENGES`.
+
+### Developer note (Task 6)
+
+I built the Intern Dashboard so that the whole page is driven by one JavaScript array of tasks and one status object. The task cards, the progress numbers, the progress bar and the filter counts are all produced from that data, so when I click Mark as Completed one function updates everything at once without a refresh. I learned how to calculate and display progress percentages, how to generate HTML from an array, and how to keep a popup, filters and counts in sync. The hardest part was making sure every part of the page changed together, including the welcome status and the Continue Task button, which I solved by re-rendering from the same data after every change. I also added a Technology Explorer so the dashboard explains the frameworks and backend tools used to build a complete web platform.
+
 ## Tasks 5 to 8: The TechBridge Intern Portal
 
 For the second half of the internship, I turned the website into a small **internship platform**. All of it runs in the browser with HTML, CSS and JavaScript, and everything an intern enters is saved on their own device only. Nothing is sent to TechBridge from these pages.
@@ -269,7 +304,7 @@ For the second half of the internship, I turned the website into a small **inter
 |---|---|---|
 | Task 5: Intern Registration | `register.html` | A three-step onboarding form (account, profile, confirm) that creates the intern profile |
 | Task 6: Task Submission | `submit.html` | Prepare a submission with the task, GitHub link, live link, screenshot and a 3 to 5 sentence developer note, review it, and save it |
-| Task 7: Intern Dashboard | `dashboard.html` | Shows the profile, progress, tasks and submissions, with a download-my-data button |
+| Task 7: Intern Dashboard | `portal-dashboard.html` | Shows the profile, progress, tasks and submissions, with a download-my-data button |
 | Task 8: Complete Platform | `portal.html` | The portal home that connects everything, with a map of how all 8 tasks fit together |
 | Extra: My progress tracker | `tracker.html` | Mark each of my own 8 tasks as To do, In progress or Done, with a progress ring and a 30-day track |
 

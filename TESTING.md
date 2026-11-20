@@ -194,3 +194,51 @@ I use this list to test the site before I submit. I tick each box only after I h
 - [ ] I checked my live website link and the page loads correctly
 - [ ] I added `images/screenshot-challenges.png`
 - [ ] I reviewed my work before submission
+
+---
+
+# Task 6 (official brief): Intern Dashboard Testing
+
+**Welcome and progress**
+- [ ] The welcome section shows the intern's name, track, a welcome message and the internship status
+- [ ] The progress section shows total tasks, completed, remaining, the percentage and the progress bar
+- [ ] The starting numbers are 5 / 8 completed and 62.5%
+
+**Task tracker**
+- [ ] Tasks 1 to 8 are displayed, generated from the `TASKS` array
+- [ ] Completed, In Progress and Not Started cards look different
+- [ ] Mark as Completed on Task 6 changes the status to Completed and updates the numbers to 6 / 8 and 75%, without a page refresh
+- [ ] The completed count, remaining count, percentage, progress bar, status text and filter counts all change together
+- [ ] Start Task and Undo work
+- [ ] Completing all 8 tasks shows the celebration and 100%
+- [ ] Refreshing the page keeps the progress (saved on this device)
+- [ ] Reset to sample progress works
+
+**Filters and details**
+- [ ] The All, Completed, In Progress and Not Started filters work, and the "No tasks found" message appears when nothing matches
+- [ ] Search finds tasks by name
+- [ ] Every View Task button opens the popup with details, and it closes with X, Close, Esc and a click outside
+- [ ] Continue Task opens the current task
+
+**Connections**
+- [ ] The Challenge Hub section shows the number of challenges and Explore Challenges opens `challenges.html`
+- [ ] The three starting-point links open that challenge in the Hub
+- [ ] The Dashboard link appears in the footer, the portal navigation and Quick jump (Ctrl+K)
+
+**Technology Explorer**
+- [ ] Next.js, Vue.js, Angular and Backend each change the content without refreshing
+- [ ] Each one explains what it is and what it is used for, and Learn More opens the official site
+- [ ] The Backend panel explains frontend vs backend and lists Node.js, Express.js, Django, Flask, Laravel and .NET
+- [ ] The arrow keys move between the technology buttons
+
+**Design and responsiveness**
+- [ ] Desktop: three columns of task cards
+- [ ] Tablet (about 768px): two columns
+- [ ] Mobile (about 390px): one column, buttons are full width, the popup fits the screen and nothing scrolls sideways
+- [ ] The dashboard matches the rest of the TechBridge website
+
+**Final testing**
+- [ ] I tested all buttons, filters and the Technology Explorer
+- [ ] I checked my live website link and the page loads correctly
+- [ ] I added `images/screenshot-intern-dashboard.png`
+- [ ] I reviewed my work before submission

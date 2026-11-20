@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Intern Dashboard | TechBridge Intern Portal</title>
-<meta name="description" content="TechBridge by Baselink Services Limited offers Data Analytics and Web Development programs and a 30-day practical internship.">
+<title>Intern Dashboard | TechBridge</title>
+<meta name="description" content="The TechBridge Intern Dashboard: track your internship progress, manage your 8 tasks, explore the Challenge Hub and learn about modern web technologies.">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__tbReady){document.documentElement.classList.remove('js');var p=document.getElementById('preloader');if(p)p.remove();}},3500)</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,11 +39,79 @@
   <div class="scroll-bar" id="scrollBar"></div>
 </header>
 <main id="main">
-<section class="page-hero"><span class="orb o1"></span><span class="orb o2"></span><img class="ph-art" src="images/bridge.svg" alt="" aria-hidden="true">
-  <div class="wrap"><p class="crumb reveal"><a href="index.html">Home</a> <i class="fa-solid fa-chevron-right"></i> Dashboard</p>
-  <h1 class="reveal" style="--d:.1s"><i class="fa-solid fa-table-columns"></i> Intern Dashboard</h1><p class="lead reveal" style="--d:.2s">Your profile, progress, tasks and submissions in one view.</p></div></section><nav class="pnav" aria-label="Intern portal"><div class="wrap"><span class="pn-t"><i class="fa-solid fa-id-badge"></i> Intern Portal</span><a href="portal.html">Overview</a><a href="register.html">Register</a><a href="tracker.html">Progress tracker</a><a href="submit.html">Submit work</a><a href="dashboard.html">Dashboard</a><a href="roadmap.html">Roadmap</a><a href="challenges.html">Challenges</a></div></nav>
+<section class="page-hero dsh-hero"><span class="orb o1"></span><span class="orb o2"></span><img class="ph-art" src="images/bridge.svg" alt="" aria-hidden="true">
+  <div class="wrap"><p class="crumb reveal"><a href="index.html">Home</a> <i class="fa-solid fa-chevron-right"></i> <a href="portal.html">Intern Portal</a> <i class="fa-solid fa-chevron-right"></i> Dashboard</p>
+  <div class="dsh-welcome reveal" style="--d:.1s">
+    <div class="dsh-avatar" id="dAvatar" aria-hidden="true">A</div>
+    <div class="dsh-wtext">
+      <h1 id="dWelcome">Welcome back, Alex</h1>
+      <p class="dsh-role"><i class="fa-solid fa-code" aria-hidden="true"></i> Web Development Intern</p>
+      <p class="lead" id="dMsg">Good to see you again. Keep your tasks up to date below and watch your progress grow.</p>
+      <div class="dsh-wrow"><span class="dsh-status s-prog" id="dStatus">Internship Status: In Progress</span>
+        <button type="button" class="btn btn-gold" id="dContinue"><i class="fa-solid fa-play" aria-hidden="true"></i> <span>Continue Task</span></button>
+        <a class="btn btn-ghost" href="#tasks"><i class="fa-solid fa-list-check" aria-hidden="true"></i> View all tasks</a></div>
+      <p class="dsh-sample" id="dSample"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A sample intern is shown. <a href="register.html">Register in the Intern Portal</a> to see your own name here.</p>
+    </div></div></div></section>
+<nav class="pnav dsh-nav" aria-label="Dashboard sections"><div class="wrap"><span class="pn-t"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Dashboard</span><a href="#progress">Progress</a><a href="#tasks">Task tracker</a><a href="#challenge-hub">Challenge Hub</a><a href="#technologies">Modern web technologies</a><a href="portal-dashboard.html">Profile and submissions</a></div></nav>
 
-<section class="section tint"><div class="wrap"><noscript><p class="demo-note">This part of the portal needs JavaScript to work. Please turn JavaScript on in your browser.</p></noscript><div id="dash"></div></div></section>
+<section class="section tint dsh-sec" id="progress" aria-labelledby="progTitle"><div class="wrap">
+<noscript><p class="ch-note">The dashboard needs JavaScript to show your tasks and progress. Please turn JavaScript on in your browser.</p></noscript>
+<div class="dsh-prog reveal">
+  <div class="dsh-prog-top"><div><h2 id="progTitle">Internship Progress</h2>
+    <p class="dsh-big" aria-live="polite"><strong id="pDone">0</strong> / <span id="pTotal">8</span> Tasks Completed</p></div>
+    <div class="dsh-pct" id="pPct" aria-hidden="true">0%</div></div>
+  <div class="dsh-bar" id="pBar" role="progressbar" aria-label="Overall internship progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="pFill"></span></div>
+  <p class="dsh-remain" id="pRemain" aria-live="polite">8 Tasks Remaining</p>
+  <dl class="dsh-stats">
+    <div><dt>Total tasks</dt><dd id="sTotal">8</dd></div>
+    <div class="s-done"><dt>Completed</dt><dd id="sDone">0</dd></div>
+    <div class="s-prog"><dt>In progress</dt><dd id="sProg">0</dd></div>
+    <div class="s-todo"><dt>Not started</dt><dd id="sTodo">0</dd></div>
+    <div><dt>Tasks remaining</dt><dd id="sRemain">8</dd></div>
+  </dl>
+  <ol class="dsh-rail" id="pRail" aria-label="Status of each task"></ol>
+  <div class="dsh-cele" id="cCelebrate" hidden><i class="fa-solid fa-trophy" aria-hidden="true"></i><div><strong>All 8 tasks completed!</strong><p>Congratulations. You finished every task. Keep your work live and share your journey with the community.</p></div></div>
+</div></div></section>
+
+<section class="section dsh-sec" id="tasks" aria-labelledby="tasksTitle"><div class="wrap">
+<div class="head reveal"><h2 id="tasksTitle">Task Tracker</h2><p>Your 8 internship tasks. Start a task, mark it as completed, or open it to see the details. Everything updates instantly.</p></div>
+<div class="ch-tools dsh-tools" role="search">
+  <div class="ch-search"><label for="tSearch" class="sr">Search tasks</label><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" id="tSearch" placeholder="Search tasks" autocomplete="off"></div>
+  <div class="ch-group"><span class="ch-lab" id="labTF">Show</span><div class="ch-btns" id="tFilters" role="group" aria-labelledby="labTF">
+    <button type="button" class="ptab on" data-f="all" aria-pressed="true">All <em>8</em></button><button type="button" class="ptab" data-f="done" aria-pressed="false">Completed <em>0</em></button><button type="button" class="ptab" data-f="prog" aria-pressed="false">In Progress <em>0</em></button><button type="button" class="ptab" data-f="todo" aria-pressed="false">Not Started <em>0</em></button></div></div>
+  <div class="ch-row"><p class="ch-count" id="tCount" role="status" aria-live="polite">Showing 8 of 8 tasks</p><button type="button" class="ch-reset" id="tReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset to sample progress</button></div>
+</div>
+<p class="dsh-track-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> These are the 8 Web Development internship tasks. Your progress is saved on this device only.</p>
+<div class="tt-grid" id="taskGrid"></div>
+<div class="ch-empty" id="tEmpty" hidden><i class="fa-regular fa-face-frown" aria-hidden="true"></i><h3>No tasks found</h3><p>Nothing matches that filter or search. Try another one.</p><button type="button" class="btn btn-navy" id="tEmptyReset">Show all tasks</button></div>
+</div></section>
+
+<section class="section dsh-hubsec" id="challenge-hub" aria-labelledby="hubTitle"><div class="wrap">
+<div class="dsh-hub reveal">
+  <div class="dsh-hub-main"><p class="kick-tag">Connected to Task 5</p><h2 id="hubTitle">Challenge Hub</h2>
+    <p class="dsh-hub-count" id="hubCount">12 Challenges Available</p>
+    <p class="dsh-hub-split" id="hubSplit">Data Analytics and Web Development</p>
+    <p class="dsh-hub-done"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span id="hubDone">0 of 12 completed by you</span></p>
+    <p class="dsh-hub-text">Practise your skills on realistic Data Analytics and Web Development challenges, filtered by track and difficulty.</p>
+    <div class="actions"><a class="btn btn-gold" href="challenges.html"><i class="fa-solid fa-trophy" aria-hidden="true"></i> Explore Challenges</a></div></div>
+  <div class="dsh-hub-side" id="hubStart"><h3>Good places to start</h3><ul id="hubList"></ul></div>
+</div></div></section>
+
+<section class="section tint dsh-sec" id="technologies" aria-labelledby="techTitle"><div class="wrap">
+<div class="head reveal"><h2 id="techTitle">Modern Web Technologies</h2><p>A complete web platform is built from many technologies. Pick one to learn what it is and what developers use it for.</p></div>
+<div class="tx reveal">
+  <div class="tx-tabs" id="txTabs" role="tablist" aria-label="Modern web technologies">
+    <button type="button" role="tab" class="tx-tab on" id="tab-next" data-t="next" aria-selected="true" aria-controls="txPanel">Next.js</button>
+    <button type="button" role="tab" class="tx-tab" id="tab-vue" data-t="vue" aria-selected="false" aria-controls="txPanel" tabindex="-1">Vue.js</button>
+    <button type="button" role="tab" class="tx-tab" id="tab-angular" data-t="angular" aria-selected="false" aria-controls="txPanel" tabindex="-1">Angular</button>
+    <button type="button" role="tab" class="tx-tab" id="tab-backend" data-t="backend" aria-selected="false" aria-controls="txPanel" tabindex="-1">Backend</button>
+  </div>
+  <div class="tx-panel" id="txPanel" role="tabpanel" aria-labelledby="tab-next" tabindex="0"></div>
+</div></div></section>
+
+<dialog class="modal ch-modal tm-modal" id="taskModal" aria-labelledby="tmTitle"><button type="button" class="x" data-close aria-label="Close task details"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><div id="tmBody"></div></dialog>
+
+<section class="cta"><span class="orb o1"></span><span class="orb o2"></span><div class="wrap cta-in reveal"><h2>Keep building your internship</h2><p>Practise on the challenges, review the roadmap and stay close to the community.</p><div class="actions"><a class="btn btn-gold" href="challenges.html"><i class="fa-solid fa-trophy"></i> Explore Challenges</a><a class="btn btn-ghost" href="roadmap.html"><i class="fa-solid fa-signs-post"></i> Internship roadmap</a><a class="btn btn-ghost" href="portal.html"><i class="fa-solid fa-network-wired"></i> Intern Portal</a></div></div></section>
 </main>
 <footer class="footer">
   <div class="wrap foot-grid">
@@ -65,6 +133,7 @@
       <a href="challenges.html">Challenges</a>
       <a href="tasks.html">Internship Tasks</a>
       <a href="portal.html">Intern Portal</a>
+      <a href="dashboard.html">Intern Dashboard</a>
       <a href="apply.html">Apply</a>
       <a href="index.html#faq">FAQ</a>
       <a href="community.html">Community</a>
@@ -84,6 +153,7 @@
 <div class="toast" id="toast" role="status"></div>
 <script src="data.js"></script>
 <script src="script.js"></script>
-<script src="portal.js"></script>
+<script src="challenges.js"></script>
+<script src="dashboard.js"></script>
 </body>
 </html>

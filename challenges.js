@@ -394,6 +394,9 @@
   }
 ];
 
+  /* Shared so the Intern Dashboard can show a live preview of the Hub */
+  window.TB_CHALLENGES = CHALLENGES;
+
   var TRACKS = { 'data-analytics': 'Data Analytics', 'web-development': 'Web Development' };
   var TRACK_ICON = { 'data-analytics': 'fa-chart-column', 'web-development': 'fa-code' };
   var RANK = { Beginner: 1, Intermediate: 2, Advanced: 3 };
