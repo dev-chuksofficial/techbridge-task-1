@@ -1,16 +1,18 @@
 /* ==========================================================================
-   TechBridge Intern Dashboard (Task 6)
+   TechBridge Intern Dashboard (Task 6) + Task Management API connection (Task 7)
    Plain JavaScript only. No frameworks.
 
+   Task 7 change: the tasks are no longer written inside this file.
+   The dashboard now asks the backend (Node.js + Express) for them with fetch().
+
    JavaScript concepts used, and where to find them:
-   1. ARRAYS and OBJECTS     TASKS (8 task objects) and TECHS (the technology explorer content)
-   2. STATE                  one `status` object remembers the status of every task
-   3. FUNCTIONS              counts, renderProgress, renderTasks, setStatus, openTask, showTech ...
-   4. DOM MANIPULATION       task cards are generated from the TASKS array, nothing is typed by hand
-   5. EVENT LISTENERS        click (event delegation), input, keydown
-   6. CONDITIONAL LOGIC      filters, status text, which buttons a card shows
+   1. API SETTINGS         API_BASE and request(): one function that talks to the backend
+   2. ASYNC / PROMISES     fetch().then().catch() for loading, viewing and updating tasks
+   3. STATE                tasks, view (loading | ready | error), backend (checking | connected | offline)
+   4. LOADING + ERRORS     showView() decides which of the three screens is visible
+   5. DOM MANIPULATION     task cards are generated from the data returned by the API
+   6. EVENT LISTENERS      click (event delegation), input, keydown
    7. PROGRESS CALCULATIONS  completed / total * 100
-   8. LOCAL STORAGE          progress is saved on this device only
    ========================================================================== */
 (function () {
   'use strict';
@@ -21,91 +23,132 @@
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); };
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- 1. DATA: the internship tasks ----------
-     Every task is an object inside the TASKS array. The cards on the page are built from this data.
-     To change a task (for example when TechBridge shares Task 7 and Task 8), edit it here. */
-  var TASKS = [
-    { number: 1, title: 'Build the TechBridge Homepage', status: 'done',
-      description: 'Create the first version of the TechBridge website using HTML and CSS.',
-      what: 'The first version of the TechBridge website, built with HTML and CSS.',
-      timing: 'Day 1 of the 30-day internship', difficulty: 'Beginner', tech: 'HTML5 + CSS3',
-      page: 'index.html', pageLabel: 'Open the homepage' },
-    { number: 2, title: 'Build the TechBridge Programs Experience', status: 'done',
-      description: "Create a Programs experience presenting TechBridge's available learning programs.",
-      what: "A Programs experience presenting TechBridge's available learning programs.",
-      timing: 'Day 4 of the 30-day internship', difficulty: 'Beginner', tech: 'HTML5 + CSS3', buildsOn: 'The website you created in Task 1.',
-      page: 'programs.html', pageLabel: 'Open the Programs page' },
-    { number: 3, title: 'Build the Internship Tasks Experience', status: 'done',
-      description: 'Create an interface that presents the TechBridge internship tasks and helps users understand the internship journey.',
-      what: 'An interface that presents the TechBridge internship tasks and helps users understand the internship journey.',
-      timing: 'Day 8 of the 30-day internship', difficulty: 'Beginner \u2192 Intermediate', tech: 'HTML5 + CSS3', buildsOn: 'The website you created in Tasks 1 and 2.',
-      page: 'tasks.html', pageLabel: 'Open the Internship Tasks page' },
-    { number: 4, title: 'Build an Interactive Internship Roadmap', status: 'done',
-      description: 'Use JavaScript to allow visitors to switch between the Data Analytics and Web Development internship tracks.',
-      what: 'An interactive roadmap that lets visitors switch between the Data Analytics and Web Development internship tracks.',
-      timing: 'Day 11 of the 30-day internship', difficulty: 'Beginner \u2192 Intermediate', tech: 'HTML5 + CSS3 + JavaScript', buildsOn: 'The Internship Tasks experience from Task 3.',
-      page: 'roadmap.html', pageLabel: 'Open the Internship Roadmap' },
-    { number: 5, title: 'Build a TechBridge Challenge Section', status: 'done',
-      description: 'Build an interactive Challenge Hub where visitors can browse, filter and explore Data Analytics and Web Development challenges.',
-      what: 'An interactive Challenge Hub with track and difficulty filters, and a details view for every challenge.',
-      timing: 'Nov 17 to Nov 19, 2026', time: '3\u20134 hours', difficulty: 'Beginner \u2192 Intermediate', tech: 'HTML, CSS & JavaScript', buildsOn: 'The two tracks from Task 4.',
-      page: 'challenges.html', pageLabel: 'Open the Challenge Hub' },
-    { number: 6, title: 'Build the TechBridge Intern Dashboard', status: 'prog',
-      description: 'Build an interactive dashboard where an intern can see progress, track tasks, explore the Challenge Hub and learn about modern web technologies.',
-      what: 'An interactive Intern Dashboard with a progress section, a task tracker with filters, task details, a link to the Challenge Hub and a technology explorer.',
-      timing: 'Nov 20 to Nov 23, 2026', time: '4\u20136 hours', difficulty: 'Intermediate', tech: 'HTML5, CSS3 & JavaScript', buildsOn: 'The Challenge Hub from Task 5.',
-      page: '#progress', pageLabel: 'You are on this page now' },
-    { number: 7, title: 'Next task to be announced', status: 'todo', tba: true,
-      description: 'TechBridge has not shared this task yet. Its details will appear here once the official brief is published.',
-      what: 'To be confirmed by TechBridge in the official task brief.' },
-    { number: 8, title: 'Final task to be announced', status: 'todo', tba: true,
-      description: 'TechBridge has not shared this task yet. Its details will appear here once the official brief is published.',
-      what: 'To be confirmed by TechBridge in the official task brief.' }
-  ];
-  var TOTAL = TASKS.length;
+  /* ---------- 1. API SETTINGS ----------
+     Where is the backend? The script finds out by asking, in this order:
+       1. the same address as this page (when Express serves the dashboard, for example http://localhost:3000/dashboard.html)
+       2. http://localhost:3000 (when the page is opened from VS Code Live Server on another port, or from a file)
+     The first address that answers GET /api/health is used. You can also set window.TB_API_BASE before this script to force an address. */
+  var API_BASE = window.TB_API_BASE ? String(window.TB_API_BASE).replace(/\/$/, '') : null;   // null = not decided yet
+  var TIMEOUT_MS = 8000;
+  var HEALTH_EVERY_MS = 8000;
+
+  /* One function for every call to the backend. It returns a promise.
+     - If the server cannot be reached, the error has err.network = true.
+     - If the server answers with an error (400, 404 ...), the error carries the server's message. */
+  function send(base, method, path, body, timeout) {
+    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, timeout || TIMEOUT_MS) : null;
+    var opts = { method: method, headers: { 'Accept': 'application/json' } };
+    if (ctrl) opts.signal = ctrl.signal;
+    if (body !== undefined) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+    return fetch(base + path, opts).then(function (res) {
+      if (timer) clearTimeout(timer);
+      return res.text().then(function (text) {
+        var data = null;
+        try { data = text ? JSON.parse(text) : null; } catch (e) { /* the answer was not JSON */ }
+        if (!res.ok) { var er = new Error((data && data.error) || ('The server answered with status ' + res.status + '.')); er.status = res.status; throw er; }
+        if (data === null) { var e2 = new Error('The server did not return JSON.'); e2.status = res.status; throw e2; }
+        return data;
+      });
+    }, function () {
+      if (timer) clearTimeout(timer);
+      var e = new Error('Cannot reach the backend.'); e.network = true; throw e;
+    });
+  }
+  function request(method, path, body) { return send(API_BASE || '', method, path, body); }
+
+  function resolveApiBase() {
+    if (API_BASE !== null) return Promise.resolve();
+    var l = window.location, local = l.protocol === 'file:' || l.hostname === 'localhost' || l.hostname === '127.0.0.1';
+    var candidates = l.protocol === 'file:' ? ['http://localhost:3000'] : (local ? ['', 'http://localhost:3000'] : ['']);
+    var i = 0;
+    function probe() {
+      return send(candidates[i], 'GET', '/api/health', undefined, 3000).then(function (d) {
+        if (!d || d.status !== 'ok') throw new Error('not the task API');
+        API_BASE = candidates[i];
+      }).catch(function () {
+        i++;
+        if (i < candidates.length) return probe();
+        API_BASE = candidates[0];                    // nothing answered: keep the first choice, the error screen will explain
+      });
+    }
+    return probe();
+  }
+
+  /* ---------- the data ----------
+     The API uses "completed", "in-progress" and "not-started".
+     Inside this file those are shortened to "done", "prog" and "todo" so the cards and filters stay simple. */
+  var FROM_API = { 'completed': 'done', 'in-progress': 'prog', 'not-started': 'todo' };
+  var TO_API = { done: 'completed', prog: 'in-progress', todo: 'not-started' };
   var LABEL = { done: 'Completed', prog: 'In Progress', todo: 'Not Started' };
   var ICON = { done: 'fa-solid fa-circle-check', prog: 'fa-solid fa-circle-half-stroke', todo: 'fa-regular fa-circle' };
-  var STORE = 'tb-dashboard-v1';
 
-  /* ---------- 2. STATE ---------- */
-  var status = {};            // { 1: 'done', 2: 'done', ... }
+  function normalize(a) {
+    return { number: a.id, title: a.title, description: a.description || '', status: FROM_API[a.status] || 'todo',
+      what: a.what, timing: a.timing, time: a.estimatedTime, difficulty: a.difficulty, tech: a.technologies,
+      buildsOn: a.buildsOn, page: a.page, pageLabel: a.pageLabel, tba: !!a.tba };
+  }
+
+  /* ---------- 3. STATE ---------- */
+  var tasks = [];             // the tasks received from the API
+  var view = 'loading';       // loading | ready | error
+  var backend = 'checking';   // checking | connected | offline
   var filter = 'all';         // all | done | prog | todo
   var query = '';             // search text
+  var saving = {};            // task numbers that are waiting for the server to answer
   var openNumber = null;      // task shown in the popup
   var lastTrigger = null;
 
-  function defaults() { var s = {}; TASKS.forEach(function (t) { s[t.number] = t.status; }); return s; }
-  function load() {
-    var s = defaults();
-    try {
-      var saved = JSON.parse(localStorage.getItem(STORE) || 'null');
-      if (saved && saved.status) Object.keys(s).forEach(function (k) { if (LABEL[saved.status[k]]) s[k] = saved.status[k]; });
-    } catch (e) { /* storage may be blocked: the defaults are used */ }
-    return s;
-  }
-  function save() { try { localStorage.setItem(STORE, JSON.stringify({ status: status })); } catch (e) { /* ignore */ } }
-  status = load();
-
-  function taskOf(n) { return TASKS.filter(function (t) { return t.number === n; })[0]; }
+  function taskOf(n) { return tasks.filter(function (t) { return t.number === n; })[0]; }
 
   /* ---------- 7. PROGRESS CALCULATIONS ---------- */
   function counts() {
     var c = { done: 0, prog: 0, todo: 0 };
-    TASKS.forEach(function (t) { c[status[t.number]]++; });
+    tasks.forEach(function (t) { c[t.status]++; });
     return c;
   }
-  function percent(done) { return done / TOTAL * 100; }
+  function percent(done) { return tasks.length ? done / tasks.length * 100 : 0; }
   function pctText(p) { return (Math.round(p * 10) / 10) + '%'; }         // 37.5 -> "37.5%", 50 -> "50%"
   function currentTask() {                                                 // the task the intern should work on now
-    var p = TASKS.filter(function (t) { return status[t.number] === 'prog'; })[0];
-    return p || TASKS.filter(function (t) { return status[t.number] === 'todo'; })[0] || null;
+    var p = tasks.filter(function (t) { return t.status === 'prog'; })[0];
+    return p || tasks.filter(function (t) { return t.status === 'todo'; })[0] || null;
   }
 
   /* ---------- toast ---------- */
   function toast(msg) {
     var t = $('#toast'); if (!t) return;
     t.textContent = msg; t.classList.add('show');
-    clearTimeout(toast.id); toast.id = setTimeout(function () { t.classList.remove('show'); }, 3200);
+    clearTimeout(toast.id); toast.id = setTimeout(function () { t.classList.remove('show'); }, 3600);
+  }
+
+  /* ---------- Backend status indicator ---------- */
+  var BACKEND_TEXT = { checking: 'Checking...', connected: 'Connected', offline: 'Offline' };
+  function setBackend(state) {
+    backend = state;
+    var pill = $('#apiStatus');
+    pill.className = 'api-pill is-' + state;
+    $('#apiText').textContent = 'Backend Status: ' + BACKEND_TEXT[state];
+    $('#apiWhere').textContent = API_BASE === null ? 'Looking for the backend...' : (API_BASE || location.origin) + '/api';
+  }
+  function checkHealth() {
+    return request('GET', '/api/health').then(function (d) {
+      if (!d || d.status !== 'ok') throw new Error('Unexpected health answer.');
+      var was = backend;
+      setBackend('connected');
+      if (was === 'offline') { if (view === 'error') loadTasks(); else toast('The backend is back online.'); }
+    }).catch(function () {
+      var was = backend;
+      setBackend('offline');
+      if (was === 'connected' && view === 'ready') toast('The backend went offline.');
+    });
+  }
+
+  /* ---------- 4. LOADING / READY / ERROR screens ---------- */
+  function showView() {
+    $('#tLoading').hidden = view !== 'loading';
+    $('#tError').hidden = view !== 'error';
+    $('#tReady').hidden = view !== 'ready';
+    $('#taskGrid').setAttribute('aria-busy', view === 'loading' ? 'true' : 'false');
   }
 
   /* ---------- Welcome section ---------- */
@@ -117,55 +160,67 @@
     return '';
   }
   function renderWelcome(c) {
-    var full = readProfileName(), first = full ? full.split(/\s+/)[0] : 'Alex';
+    var full = readProfileName(), first = full ? full.split(/\s+/)[0] : 'Alex', total = tasks.length;
     $('#dWelcome').textContent = 'Welcome back, ' + first;
     $('#dAvatar').textContent = (full || 'Alex').split(/\s+/).slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase();
-    $('#dSample').hidden = !!full;                                         // only show the sample note when no profile exists
+    $('#dSample').hidden = !!full;
 
-    var st = c.done === TOTAL ? 'Completed' : (c.done === 0 && c.prog === 0 ? 'Not Started' : 'In Progress');
-    var pill = $('#dStatus');
+    var pill = $('#dStatus'), st, cls;
+    if (!total) { st = view === 'loading' ? 'Loading...' : 'Unavailable'; cls = 's-todo'; }
+    else if (c.done === total) { st = 'Completed'; cls = 's-done'; }
+    else if (c.done === 0 && c.prog === 0) { st = 'Not Started'; cls = 's-todo'; }
+    else { st = 'In Progress'; cls = 's-prog'; }
     pill.textContent = 'Internship Status: ' + st;
-    pill.className = 'dsh-status ' + (st === 'Completed' ? 's-done' : st === 'Not Started' ? 's-todo' : 's-prog');
+    pill.className = 'dsh-status ' + cls;
 
-    $('#dMsg').textContent = c.done === TOTAL
-      ? 'You have completed all ' + TOTAL + ' tasks. Well done, and thank you for the work you put in.'
-      : 'Good to see you again. Keep your tasks up to date below and watch your progress grow.';
+    $('#dMsg').textContent = !total
+      ? (view === 'loading' ? 'Getting your tasks from the TechBridge backend...' : 'The dashboard cannot reach the backend right now. Start the server and try again.')
+      : c.done === total
+        ? 'You have completed all ' + total + ' tasks. Well done, and thank you for the work you put in.'
+        : 'Good to see you again. Keep your tasks up to date below and watch your progress grow.';
 
     var cur = currentTask(), btn = $('#dContinue');
-    if (cur) { btn.hidden = false; btn.dataset.n = cur.number; btn.querySelector('span').textContent = (status[cur.number] === 'prog' ? 'Continue Task ' : 'Start Task ') + cur.number; }
+    if (cur) { btn.hidden = false; btn.dataset.n = cur.number; btn.querySelector('span').textContent = (cur.status === 'prog' ? 'Continue Task ' : 'Start Task ') + cur.number; }
     else { btn.hidden = true; }
   }
 
   /* ---------- Progress section ---------- */
   function renderProgress() {
-    var c = counts(), p = percent(c.done);
-    $('#pDone').textContent = c.done;
+    var c = counts(), total = tasks.length;
+    if (!total) {                                   // nothing loaded yet, or the backend is offline
+      var dash = '\u2013';
+      $('#pDone').textContent = dash; $('#pTotal').textContent = dash; $('#pPct').textContent = dash;
+      $('#pFill').style.width = '0%'; $('#pBar').setAttribute('aria-valuenow', 0);
+      ['#sTotal', '#sDone', '#sProg', '#sTodo', '#sRemain'].forEach(function (s) { $(s).textContent = dash; });
+      $('#pRemain').textContent = view === 'loading' ? 'Loading progress...' : 'Progress is unavailable until the backend is connected.';
+      $('#pRail').innerHTML = ''; $('#cCelebrate').hidden = true;
+      $$('#tFilters button').forEach(function (b) { $('em', b).textContent = dash; });
+      renderWelcome(c);
+      return;
+    }
+    var p = percent(c.done);
+    $('#pDone').textContent = c.done; $('#pTotal').textContent = total;
     $('#pPct').textContent = pctText(p);
     $('#pFill').style.width = p + '%';
     $('#pBar').setAttribute('aria-valuenow', Math.round(p * 10) / 10);
-    $('#sTotal').textContent = TOTAL;
-    $('#sDone').textContent = c.done;
-    $('#sProg').textContent = c.prog;
-    $('#sTodo').textContent = c.todo;
-    $('#sRemain').textContent = TOTAL - c.done;
-    $('#pRemain').textContent = (TOTAL - c.done) + (TOTAL - c.done === 1 ? ' Task Remaining' : ' Tasks Remaining');
+    $('#sTotal').textContent = total; $('#sDone').textContent = c.done; $('#sProg').textContent = c.prog; $('#sTodo').textContent = c.todo;
+    $('#sRemain').textContent = total - c.done;
+    $('#pRemain').textContent = (total - c.done) + (total - c.done === 1 ? ' Task Remaining' : ' Tasks Remaining');
 
-    $('#pRail').innerHTML = TASKS.map(function (t) {
-      var s = status[t.number];
-      return '<li class="' + 's-' + s + '"><span class="sr">Task ' + t.number + ': ' + LABEL[s] + '</span><b aria-hidden="true">' + t.number + '</b></li>';
+    $('#pRail').innerHTML = tasks.map(function (t) {
+      return '<li class="s-' + t.status + '"><span class="sr">Task ' + t.number + ': ' + LABEL[t.status] + '</span><b aria-hidden="true">' + t.number + '</b></li>';
     }).join('');
+    $('#pRail').style.gridTemplateColumns = 'repeat(' + Math.min(total, 12) + ', 1fr)';
+    $('#cCelebrate').hidden = c.done !== total;
 
-    $('#cCelebrate').hidden = c.done !== TOTAL;
-
-    /* counts on the filter buttons */
-    var all = { all: TOTAL, done: c.done, prog: c.prog, todo: c.todo };
+    var all = { all: total, done: c.done, prog: c.prog, todo: c.todo };
     $$('#tFilters button').forEach(function (b) { $('em', b).textContent = all[b.dataset.f]; });
     renderWelcome(c);
   }
 
-  /* ---------- Task tracker: build cards from the data ---------- */
+  /* ---------- Task tracker: build cards from the API data ---------- */
   function matches(t) {
-    if (filter !== 'all' && status[t.number] !== filter) return false;
+    if (filter !== 'all' && t.status !== filter) return false;
     if (query) {
       var hay = ('task ' + t.number + ' ' + t.title + ' ' + t.description).toLowerCase();
       if (hay.indexOf(query) === -1) return false;
@@ -173,35 +228,60 @@
     return true;
   }
   function cardHtml(t) {
-    var s = status[t.number], n = t.number;
-    var actions = '<button type="button" class="btn btn-navy tt-view" data-act="view" data-n="' + n + '" aria-haspopup="dialog" aria-label="View Task ' + n + ': ' + esc(t.title) + '">View Task</button>';
-    if (s === 'prog') actions += '<button type="button" class="btn btn-gold tt-do" data-act="done" data-n="' + n + '" aria-label="Mark Task ' + n + ' as completed"><i class="fa-solid fa-check" aria-hidden="true"></i> Mark as Completed</button>';
-    if (s === 'todo') actions += '<button type="button" class="btn btn-ghost-dark tt-do" data-act="start" data-n="' + n + '" aria-label="Start Task ' + n + '"><i class="fa-solid fa-play" aria-hidden="true"></i> Start Task</button>' +
-      '<button type="button" class="tt-link" data-act="done" data-n="' + n + '" aria-label="Mark Task ' + n + ' as completed">Mark as Completed</button>';
-    if (s === 'done') actions += '<button type="button" class="tt-link" data-act="reopen" data-n="' + n + '" aria-label="Reopen Task ' + n + '">Undo</button>';
-    return '<article class="tt-card s-' + s + '" id="task-' + n + '" data-n="' + n + '">' +
+    var s = t.status, n = t.number, busy = saving[n], dis = busy ? ' disabled' : '';
+    var actions = '<button type="button" class="btn btn-navy tt-view" data-act="view" data-n="' + n + '" aria-haspopup="dialog" aria-label="View Task ' + n + ': ' + esc(t.title) + '"' + dis + '>View Task</button>';
+    if (s === 'prog') actions += '<button type="button" class="btn btn-gold tt-do" data-act="done" data-n="' + n + '" aria-label="Mark Task ' + n + ' as completed"' + dis + '><i class="fa-solid fa-check" aria-hidden="true"></i> ' + (busy ? 'Saving...' : 'Mark as Completed') + '</button>';
+    if (s === 'todo') actions += '<button type="button" class="btn btn-ghost-dark tt-do" data-act="start" data-n="' + n + '" aria-label="Start Task ' + n + '"' + dis + '><i class="fa-solid fa-play" aria-hidden="true"></i> ' + (busy ? 'Saving...' : 'Start Task') + '</button>' +
+      '<button type="button" class="tt-link" data-act="done" data-n="' + n + '" aria-label="Mark Task ' + n + ' as completed"' + dis + '>Mark as Completed</button>';
+    if (s === 'done') actions += '<button type="button" class="tt-link" data-act="reopen" data-n="' + n + '" aria-label="Reopen Task ' + n + '"' + dis + '>' + (busy ? 'Saving...' : 'Undo') + '</button>';
+    return '<article class="tt-card s-' + s + (busy ? ' is-saving' : '') + '" id="task-' + n + '" data-n="' + n + '">' +
       '<header><span class="tt-no">TASK ' + n + '</span><span class="tt-st s-' + s + '"><i class="' + ICON[s] + '" aria-hidden="true"></i> ' + LABEL[s] + '</span></header>' +
       '<h3>' + esc(t.title) + '</h3><p>' + esc(t.description) + '</p>' +
       '<div class="tt-actions">' + actions + '</div></article>';
   }
   function renderTasks(popNumber) {
-    var rows = TASKS.filter(matches);
+    var rows = tasks.filter(matches);
     $('#taskGrid').innerHTML = rows.map(cardHtml).join('');
     $('#tEmpty').hidden = rows.length !== 0;
-    $('#tCount').textContent = 'Showing ' + rows.length + ' of ' + TOTAL + ' tasks';
+    $('#tCount').textContent = 'Showing ' + rows.length + ' of ' + tasks.length + ' tasks';
     if (popNumber && !reduce) { var el = $('#task-' + popNumber); if (el) el.classList.add('tt-pop'); }
   }
+  function renderAll() { renderProgress(); renderTasks(); showView(); }
 
-  function setStatus(n, s, silent) {
-    var t = taskOf(n); if (!t || status[n] === s) return;
-    status[n] = s; save();
-    renderProgress(); renderTasks(n);
-    if (openNumber === n) renderModal(n);
-    if (!silent) {
-      if (s === 'done') { toast('Task ' + n + ' marked as completed. ' + counts().done + ' of ' + TOTAL + ' done.'); if (counts().done === TOTAL) celebrate(); }
-      else if (s === 'prog') toast('Task ' + n + ' is now in progress.');
+  /* ---------- 2. Loading the tasks: GET /api/tasks ---------- */
+  function loadTasks() {
+    view = 'loading'; tasks = []; showView(); renderProgress();
+    return request('GET', '/api/tasks').then(function (data) {
+      if (!Array.isArray(data)) throw new Error('The server sent data in an unexpected shape.');
+      tasks = data.map(normalize);
+      view = 'ready'; setBackend('connected');
+      renderAll();
+    }).catch(function (err) {
+      tasks = []; view = 'error';
+      if (err.network || err.status >= 404 || !err.status) setBackend('offline');
+      $('#tErrDetail').textContent = 'Details: ' + err.message;
+      showView(); renderProgress();
+    });
+  }
+
+  /* ---------- Updating a task: PUT /api/tasks/:id ---------- */
+  function setStatus(n, s) {
+    var t = taskOf(n); if (!t || t.status === s || saving[n]) return;
+    saving[n] = true; renderTasks(); if (openNumber === n) renderModal(t);
+    request('PUT', '/api/tasks/' + n, { status: TO_API[s] }).then(function (updated) {
+      var u = normalize(updated); t.status = u.status;               // the server's answer is the truth
+      delete saving[n]; setBackend('connected');
+      renderProgress(); renderTasks(n);
+      if (openNumber === n) renderModal(t);
+      var c = counts();
+      if (u.status === 'done') { toast('Task ' + n + ' marked as completed. ' + c.done + ' of ' + tasks.length + ' done.'); if (c.done === tasks.length) celebrate(); }
+      else if (u.status === 'prog') toast('Task ' + n + ' is now in progress.');
       else toast('Task ' + n + ' moved back to Not Started.');
-    }
+    }).catch(function (err) {
+      delete saving[n]; if (err.network) setBackend('offline');
+      renderTasks(); if (openNumber === n) renderModal(t);
+      toast('Could not update Task ' + n + '. ' + (err.network ? 'The backend cannot be reached.' : err.message));
+    });
   }
 
   /* ---------- Filters (conditional logic) ---------- */
@@ -211,31 +291,51 @@
     renderTasks();
   }
 
-  /* ---------- Task details popup ---------- */
+  /* ---------- Task details popup: GET /api/tasks/:id ---------- */
   var dlg = $('#taskModal'), mBody = $('#tmBody');
   function field(label, value) { return value ? '<div><dt>' + label + '</dt><dd>' + esc(value) + '</dd></div>' : ''; }
-  function renderModal(n) {
-    var t = taskOf(n), s = status[n], c = '';
+  function renderModal(t) {
+    var s = t.status, n = t.number, busy = saving[n], dis = busy ? ' disabled' : '', c = '';
     c += '<div class="tm-top"><span class="tt-no">TASK ' + n + '</span><span class="tt-st s-' + s + '"><i class="' + ICON[s] + '" aria-hidden="true"></i> ' + LABEL[s] + '</span></div>';
     c += '<h3 id="tmTitle">' + esc(t.title) + '</h3><p class="tm-desc">' + esc(t.description) + '</p>';
     c += '<dl class="tm-facts">' + field('What you build', t.what) + field('Timing', t.timing) + field('Estimated time', t.time) + field('Difficulty', t.difficulty) + field('Technologies', t.tech) + field('Builds on', t.buildsOn) + '</dl>';
     if (t.tba) c += '<p class="tm-note"><span class="pill">Confirm with TechBridge</span> Check the official TechBridge task brief and the WhatsApp Community for this task.</p>';
+    c += '<p class="tm-src"><i class="fa-solid fa-server" aria-hidden="true"></i> Loaded from <code>GET /api/tasks/' + n + '</code></p>';
     c += '<div class="tm-actions">';
-    if (s === 'todo') c += '<button type="button" class="btn btn-ghost-dark" data-act="start" data-n="' + n + '"><i class="fa-solid fa-play" aria-hidden="true"></i> Start Task</button>';
-    if (s !== 'done') c += '<button type="button" class="btn btn-gold" data-act="done" data-n="' + n + '"><i class="fa-solid fa-check" aria-hidden="true"></i> Mark as Completed</button>';
-    if (s === 'done') c += '<button type="button" class="btn btn-ghost-dark" data-act="reopen" data-n="' + n + '">Undo completion</button>';
-    if (t.page && t.page.charAt(0) !== '#') c += '<a class="btn btn-navy" href="' + esc(t.page) + '"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> ' + esc(t.pageLabel) + '</a>';
+    if (s === 'todo') c += '<button type="button" class="btn btn-ghost-dark" data-act="start" data-n="' + n + '"' + dis + '><i class="fa-solid fa-play" aria-hidden="true"></i> ' + (busy ? 'Saving...' : 'Start Task') + '</button>';
+    if (s !== 'done') c += '<button type="button" class="btn btn-gold" data-act="done" data-n="' + n + '"' + dis + '><i class="fa-solid fa-check" aria-hidden="true"></i> ' + (busy ? 'Saving...' : 'Mark as Completed') + '</button>';
+    if (s === 'done') c += '<button type="button" class="btn btn-ghost-dark" data-act="reopen" data-n="' + n + '"' + dis + '>' + (busy ? 'Saving...' : 'Undo completion') + '</button>';
+    if (t.page) c += '<a class="btn btn-navy" href="' + esc(t.page) + '"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> ' + esc(t.pageLabel || 'Open the page') + '</a>';
     c += '<button type="button" class="btn btn-ghost-dark" data-close>Close</button></div>';
     mBody.innerHTML = c;
   }
+  function renderModalLoading(n) {
+    mBody.innerHTML = '<div class="tm-top"><span class="tt-no">TASK ' + n + '</span></div><h3 id="tmTitle">Loading task...</h3>' +
+      '<div class="tt-state" role="status"><span class="spin" aria-hidden="true"></span><p>Asking the backend for Task ' + n + '...</p></div>';
+  }
+  function renderModalError(n, err) {
+    mBody.innerHTML = '<div class="tm-top"><span class="tt-no">TASK ' + n + '</span></div><h3 id="tmTitle">Unable to load this task.</h3>' +
+      '<p class="tm-desc">' + (err.network ? 'The backend cannot be reached. Please check your connection or try again.' : esc(err.message)) + '</p>' +
+      '<div class="tm-actions"><button type="button" class="btn btn-navy" data-act="retry" data-n="' + n + '"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Try again</button><button type="button" class="btn btn-ghost-dark" data-close>Close</button></div>';
+  }
   function openTask(n, trigger) {
-    if (!taskOf(n)) return;
-    openNumber = n; lastTrigger = trigger || null;
-    renderModal(n); dlg.scrollTop = 0;
+    openNumber = n; lastTrigger = trigger || lastTrigger;
+    renderModalLoading(n); dlg.scrollTop = 0;
     if (typeof dlg.showModal === 'function') { if (!dlg.open) dlg.showModal(); } else { dlg.setAttribute('open', ''); }
+    request('GET', '/api/tasks/' + n).then(function (a) {
+      if (openNumber !== n) return;                                  // the popup was closed or changed meanwhile
+      var fresh = normalize(a), t = taskOf(n);
+      if (t) { Object.keys(fresh).forEach(function (k) { t[k] = fresh[k]; }); fresh = t; }
+      setBackend('connected'); renderModal(fresh); renderProgress(); renderTasks();
+    }).catch(function (err) {
+      if (openNumber !== n) return;
+      if (err.network) setBackend('offline');
+      renderModalError(n, err);
+    });
   }
   dlg.addEventListener('click', function (e) {
     if (e.target === dlg || e.target.closest('[data-close]')) { dlg.close(); return; }
+    var link = e.target.closest('a[href^="#"]'); if (link) { dlg.close(); return; }   // in-page link: close the popup, then scroll
     var b = e.target.closest('[data-act]'); if (b) act(b.dataset.act, +b.dataset.n);
   });
   dlg.addEventListener('close', function () {
@@ -246,11 +346,11 @@
   /* ---------- one place that reacts to every button ---------- */
   function act(a, n) {
     if (a === 'done') setStatus(n, 'done');
-    else if (a === 'start') setStatus(n, 'prog');
-    else if (a === 'reopen') setStatus(n, 'prog');
+    else if (a === 'start' || a === 'reopen') setStatus(n, 'prog');
+    else if (a === 'retry') openTask(n);
   }
   $('#taskGrid').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-act]'); if (!b) return;
+    var b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
     var n = +b.dataset.n;
     if (b.dataset.act === 'view') openTask(n, b); else act(b.dataset.act, n);
   });
@@ -258,9 +358,12 @@
   $('#tSearch').addEventListener('input', function () { query = this.value.trim().toLowerCase(); renderTasks(); });
   $('#tEmptyReset').addEventListener('click', function () { $('#tSearch').value = ''; query = ''; setFilter('all'); });
   $('#dContinue').addEventListener('click', function () { openTask(+this.dataset.n, this); });
+  $('#tRetry').addEventListener('click', function () { checkHealth(); loadTasks(); });
+  $('#apiCheck').addEventListener('click', function () { setBackend('checking'); checkHealth().then(function () { toast('Backend Status: ' + BACKEND_TEXT[backend] + '.'); }); });
   $('#tReset').addEventListener('click', function () {
-    if (!confirm('Reset the dashboard to the sample progress? This only affects this device.')) return;
-    status = defaults(); save(); renderProgress(); renderTasks(); toast('Progress reset to the sample.');
+    if (!confirm('Reset all tasks to the original data on the server?')) return;
+    request('POST', '/api/tasks/reset').then(function () { toast('Tasks reset to the original data.'); return loadTasks(); })
+      .catch(function (err) { toast('Could not reset the tasks. ' + (err.network ? 'The backend cannot be reached.' : err.message)); });
   });
 
   /* ---------- Completion celebration ---------- */
@@ -363,8 +466,14 @@
   });
 
   /* ---------- Start ---------- */
+  setBackend('checking');
   renderProgress();
-  renderTasks();
+  showView();
   renderHub();
   showTech('next');
+  resolveApiBase().then(function () {           // 1. find the backend
+    setBackend(backend);
+    loadTasks();                                 // 2. ask it for the tasks
+    setInterval(checkHealth, HEALTH_EVERY_MS);   // 3. keep checking that the backend is still there
+  });
 })();

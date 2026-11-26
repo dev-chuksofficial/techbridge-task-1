@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Intern Dashboard | TechBridge</title>
+<title>Intern Dashboard | TechBridge (connected to the Task API)</title>
 <meta name="description" content="The TechBridge Intern Dashboard: track your internship progress, manage your 8 tasks, explore the Challenge Hub and learn about modern web technologies.">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__tbReady){document.documentElement.classList.remove('js');var p=document.getElementById('preloader');if(p)p.remove();}},3500)</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +52,7 @@
         <a class="btn btn-ghost" href="#tasks"><i class="fa-solid fa-list-check" aria-hidden="true"></i> View all tasks</a></div>
       <p class="dsh-sample" id="dSample"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A sample intern is shown. <a href="register.html">Register in the Intern Portal</a> to see your own name here.</p>
     </div></div></div></section>
-<nav class="pnav dsh-nav" aria-label="Dashboard sections"><div class="wrap"><span class="pn-t"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Dashboard</span><a href="#progress">Progress</a><a href="#tasks">Task tracker</a><a href="#challenge-hub">Challenge Hub</a><a href="#technologies">Modern web technologies</a><a href="portal-dashboard.html">Profile and submissions</a></div></nav>
+<nav class="pnav dsh-nav" aria-label="Dashboard sections"><div class="wrap"><span class="pn-t"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Dashboard</span><a href="#progress">Progress</a><a href="#tasks">Task tracker</a><a href="#api">How it works (API)</a><a href="#challenge-hub">Challenge Hub</a><a href="#technologies">Modern web technologies</a><a href="portal-dashboard.html">Profile and submissions</a></div></nav>
 
 <section class="section tint dsh-sec" id="progress" aria-labelledby="progTitle"><div class="wrap">
 <noscript><p class="ch-note">The dashboard needs JavaScript to show your tasks and progress. Please turn JavaScript on in your browser.</p></noscript>
@@ -74,16 +74,52 @@
 </div></div></section>
 
 <section class="section dsh-sec" id="tasks" aria-labelledby="tasksTitle"><div class="wrap">
-<div class="head reveal"><h2 id="tasksTitle">Task Tracker</h2><p>Your 8 internship tasks. Start a task, mark it as completed, or open it to see the details. Everything updates instantly.</p></div>
+<div class="head reveal dsh-headrow"><div><h2 id="tasksTitle">Task Tracker</h2><p>Your internship tasks come from the TechBridge backend. Start a task, mark it as completed, or open it to see its details.</p></div>
+  <div class="api-box"><span class="api-pill is-checking" id="apiStatus" role="status" aria-live="polite"><i class="api-dot" aria-hidden="true"></i><span id="apiText">Backend Status: Checking...</span></span><span class="api-where" id="apiWhere"></span><button type="button" class="tt-link" id="apiCheck">Check again</button></div></div>
+
+<div class="tt-state" id="tLoading" role="status"><span class="spin" aria-hidden="true"></span><p>Loading tasks...</p></div>
+<div class="tt-state err" id="tError" role="alert" hidden>
+  <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+  <h3>Unable to load tasks.</h3><p>Please check your connection or try again.</p>
+  <p class="tt-hint" id="tErrDetail"></p>
+  <p class="tt-hint">Is the backend running? Open a terminal in the <code>backend</code> folder and run <code>npm start</code>.</p>
+  <button type="button" class="btn btn-navy" id="tRetry"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Try again</button></div>
+
+<div id="tReady" hidden>
 <div class="ch-tools dsh-tools" role="search">
   <div class="ch-search"><label for="tSearch" class="sr">Search tasks</label><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" id="tSearch" placeholder="Search tasks" autocomplete="off"></div>
   <div class="ch-group"><span class="ch-lab" id="labTF">Show</span><div class="ch-btns" id="tFilters" role="group" aria-labelledby="labTF">
-    <button type="button" class="ptab on" data-f="all" aria-pressed="true">All <em>8</em></button><button type="button" class="ptab" data-f="done" aria-pressed="false">Completed <em>0</em></button><button type="button" class="ptab" data-f="prog" aria-pressed="false">In Progress <em>0</em></button><button type="button" class="ptab" data-f="todo" aria-pressed="false">Not Started <em>0</em></button></div></div>
-  <div class="ch-row"><p class="ch-count" id="tCount" role="status" aria-live="polite">Showing 8 of 8 tasks</p><button type="button" class="ch-reset" id="tReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset to sample progress</button></div>
+    <button type="button" class="ptab on" data-f="all" aria-pressed="true">All <em>0</em></button><button type="button" class="ptab" data-f="done" aria-pressed="false">Completed <em>0</em></button><button type="button" class="ptab" data-f="prog" aria-pressed="false">In Progress <em>0</em></button><button type="button" class="ptab" data-f="todo" aria-pressed="false">Not Started <em>0</em></button></div></div>
+  <div class="ch-row"><p class="ch-count" id="tCount" role="status" aria-live="polite">Showing 0 of 0 tasks</p><button type="button" class="ch-reset" id="tReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset task data</button></div>
 </div>
-<p class="dsh-track-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> These are the 8 Web Development internship tasks. Your progress is saved on this device only.</p>
-<div class="tt-grid" id="taskGrid"></div>
+<p class="dsh-track-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> These are the Web Development internship tasks. Every change is sent to the backend, so the server always holds the latest status.</p>
+<div class="tt-grid" id="taskGrid" aria-busy="true"></div>
 <div class="ch-empty" id="tEmpty" hidden><i class="fa-regular fa-face-frown" aria-hidden="true"></i><h3>No tasks found</h3><p>Nothing matches that filter or search. Try another one.</p><button type="button" class="btn btn-navy" id="tEmptyReset">Show all tasks</button></div>
+</div>
+</div></section>
+
+<section class="section tint dsh-sec" id="api" aria-labelledby="apiTitle"><div class="wrap">
+<div class="head reveal"><h2 id="apiTitle">How This Dashboard Gets Its Tasks</h2><p>The tasks are no longer written inside the page. The dashboard asks a backend API for them, and the backend answers with JSON.</p></div>
+<ol class="api-flow reveal" aria-label="How a request travels">
+  <li><i class="fa-solid fa-display" aria-hidden="true"></i><b>Intern Dashboard</b><span>The page you are on</span></li>
+  <li><i class="fa-solid fa-code" aria-hidden="true"></i><b>JavaScript fetch()</b><span>Sends the request</span></li>
+  <li><i class="fa-solid fa-plug" aria-hidden="true"></i><b>REST API</b><span>/api/tasks</span></li>
+  <li><i class="fa-brands fa-node-js" aria-hidden="true"></i><b>Node.js + Express</b><span>The backend server</span></li>
+  <li><i class="fa-solid fa-database" aria-hidden="true"></i><b>Task data</b><span>tasks.json</span></li>
+</ol>
+<div class="api-table-wrap reveal" tabindex="0" role="region" aria-label="API endpoints table">
+<table class="api-table"><caption class="sr">TechBridge Task Management API endpoints</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">Endpoint</th><th scope="col">Purpose</th><th scope="col">Used by this dashboard for</th></tr></thead>
+<tbody>
+<tr><td><span class="m m-get">GET</span></td><td><code>/api/tasks</code></td><td>Get all tasks</td><td>Loading the task cards and the progress numbers</td></tr>
+<tr><td><span class="m m-get">GET</span></td><td><code>/api/tasks/:id</code></td><td>Get one task</td><td>The View Task popup</td></tr>
+<tr><td><span class="m m-put">PUT</span></td><td><code>/api/tasks/:id</code></td><td>Update a task's status</td><td>Mark as Completed, Start Task and Undo</td></tr>
+<tr><td><span class="m m-get">GET</span></td><td><code>/api/health</code></td><td>Check that the backend is running</td><td>The Backend Status indicator</td></tr>
+<tr><td><span class="m m-post">POST</span></td><td><code>/api/tasks/reset</code></td><td>Restore the original tasks</td><td>The Reset task data button</td></tr>
+<tr><td><span class="m m-post">POST</span></td><td><code>/api/tasks</code></td><td>Add a new task (optional)</td><td>Not used on this page yet</td></tr>
+<tr><td><span class="m m-del">DELETE</span></td><td><code>/api/tasks/:id</code></td><td>Delete a task (optional)</td><td>Not used on this page yet</td></tr>
+</tbody></table></div>
+<p class="api-note reveal"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <b>GET</b> asks for information. <b>PUT</b> updates information that already exists. When the server cannot find a task it answers <code>404</code>, and when the request is wrong it answers <code>400</code> with a short message.</p>
 </div></section>
 
 <section class="section dsh-hubsec" id="challenge-hub" aria-labelledby="hubTitle"><div class="wrap">

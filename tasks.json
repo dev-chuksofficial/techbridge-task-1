@@ -1,0 +1,103 @@
+[
+  {
+    "id": 1,
+    "title": "Build the TechBridge Homepage",
+    "description": "Create the first version of the TechBridge website using HTML and CSS.",
+    "status": "completed",
+    "what": "The first version of the TechBridge website, built with HTML and CSS.",
+    "timing": "Day 1 of the 30-day internship",
+    "difficulty": "Beginner",
+    "technologies": "HTML5 + CSS3",
+    "page": "index.html",
+    "pageLabel": "Open the homepage"
+  },
+  {
+    "id": 2,
+    "title": "Build the TechBridge Programs Experience",
+    "description": "Create a Programs experience presenting TechBridge's available learning programs.",
+    "status": "completed",
+    "what": "A Programs experience presenting TechBridge's available learning programs.",
+    "timing": "Day 4 of the 30-day internship",
+    "difficulty": "Beginner",
+    "technologies": "HTML5 + CSS3",
+    "buildsOn": "The website you created in Task 1.",
+    "page": "programs.html",
+    "pageLabel": "Open the Programs page"
+  },
+  {
+    "id": 3,
+    "title": "Build the Internship Tasks Experience",
+    "description": "Create an interface that presents the TechBridge internship tasks and helps users understand the internship journey.",
+    "status": "completed",
+    "what": "An interface that presents the TechBridge internship tasks and helps users understand the internship journey.",
+    "timing": "Day 8 of the 30-day internship",
+    "difficulty": "Beginner \u2192 Intermediate",
+    "technologies": "HTML5 + CSS3",
+    "buildsOn": "The website you created in Tasks 1 and 2.",
+    "page": "tasks.html",
+    "pageLabel": "Open the Internship Tasks page"
+  },
+  {
+    "id": 4,
+    "title": "Build an Interactive Internship Roadmap",
+    "description": "Use JavaScript to allow visitors to switch between the Data Analytics and Web Development internship tracks.",
+    "status": "completed",
+    "what": "An interactive roadmap that lets visitors switch between the Data Analytics and Web Development internship tracks.",
+    "timing": "Day 11 of the 30-day internship",
+    "difficulty": "Beginner \u2192 Intermediate",
+    "technologies": "HTML5 + CSS3 + JavaScript",
+    "buildsOn": "The Internship Tasks experience from Task 3.",
+    "page": "roadmap.html",
+    "pageLabel": "Open the Internship Roadmap"
+  },
+  {
+    "id": 5,
+    "title": "Build a TechBridge Challenge Section",
+    "description": "Build an interactive Challenge Hub where visitors can browse, filter and explore Data Analytics and Web Development challenges.",
+    "status": "completed",
+    "what": "An interactive Challenge Hub with track and difficulty filters, and a details view for every challenge.",
+    "timing": "Nov 17 to Nov 19, 2026",
+    "estimatedTime": "3\u20134 hours",
+    "difficulty": "Beginner \u2192 Intermediate",
+    "technologies": "HTML, CSS & JavaScript",
+    "buildsOn": "The two tracks from Task 4.",
+    "page": "challenges.html",
+    "pageLabel": "Open the Challenge Hub"
+  },
+  {
+    "id": 6,
+    "title": "Build the TechBridge Intern Dashboard",
+    "description": "Build an interactive dashboard where an intern can see progress, track tasks, explore the Challenge Hub and learn about modern web technologies.",
+    "status": "completed",
+    "what": "An interactive Intern Dashboard with a progress section, a task tracker with filters, task details, a link to the Challenge Hub and a technology explorer.",
+    "timing": "Nov 20 to Nov 23, 2026",
+    "estimatedTime": "4\u20136 hours",
+    "difficulty": "Intermediate",
+    "technologies": "HTML5, CSS3 & JavaScript",
+    "buildsOn": "The Challenge Hub from Task 5.",
+    "page": "dashboard.html",
+    "pageLabel": "Open the Intern Dashboard"
+  },
+  {
+    "id": 7,
+    "title": "Build a TechBridge Task Management API",
+    "description": "Build a simple backend API with Node.js and Express, and connect it to the Intern Dashboard so the tasks come from a server.",
+    "status": "in-progress",
+    "what": "A REST API with Node.js and Express that sends the tasks to the dashboard, returns a single task, and updates a task's status.",
+    "timing": "Nov 24 to Nov 26, 2026",
+    "estimatedTime": "4\u20136 hours",
+    "difficulty": "Intermediate",
+    "technologies": "HTML5, CSS3, JavaScript, Node.js, Express.js",
+    "buildsOn": "The Intern Dashboard from Task 6.",
+    "page": "#api",
+    "pageLabel": "See how the API works"
+  },
+  {
+    "id": 8,
+    "title": "Final task to be announced",
+    "description": "TechBridge has not shared this task yet. Its details will appear here once the official brief is published.",
+    "status": "not-started",
+    "what": "To be confirmed by TechBridge in the official task brief.",
+    "tba": true
+  }
+]
